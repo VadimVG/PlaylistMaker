@@ -1,42 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings"
     tools:context=".SettingsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/BaseThemeSetting"
+    android:theme="@style/Theme.PlaylistMaker.Base.Settings"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
+    <TextView
+        android:id="@+id/settingsBack"
+        style="@style/SettingsMenuBackTextViewStyle">
+    </TextView>
 
-        <ImageButton
-            android:id="@+id/settingsBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/ic_setting_menu_back">
-        </ImageButton>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="start"
-            android:text="@string/main_menu_settings"
-            android:textSize="26sp">
-        </TextView>
-
-    </LinearLayout>
 
     <LinearLayout
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
 
         <TextView
+            android:layout_width ="match_parent"
+            android:layout_height = "wrap_content"
             style="@style/SettingsMenuTextViewStyle"
             android:text="@string/setting_menu_dark_mode">
         </TextView>
@@ -53,8 +39,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
         <TextView
+            android:layout_width ="match_parent"
+            android:layout_height = "wrap_content"
             style="@style/SettingsMenuTextViewStyle"
             android:text="@string/setting_menu_share">
         </TextView>
@@ -65,16 +55,20 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_setting_menu_share"
             android:gravity="end"
-            android:background="@color/white"
+            style="@style/SettingsMenuImageButtonStyle"
             android:layout_gravity="center">
         </ImageButton>
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
 
         <TextView
+            android:layout_width ="match_parent"
+            android:layout_height = "wrap_content"
             style="@style/SettingsMenuTextViewStyle"
             android:text="@string/setting_menu_support">
         </TextView>
@@ -85,16 +79,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="end"
-            android:background="@color/white"
+            style="@style/SettingsMenuImageButtonStyle"
             android:src="@drawable/ic_setting_menu_support">
         </ImageButton>
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
 
         <TextView
+            android:layout_width ="match_parent"
+            android:layout_height = "wrap_content"
             style="@style/SettingsMenuTextViewStyle"
             android:text="@string/setting_menu_docs">
         </TextView>
@@ -105,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="end"
-            android:background="@color/white"
+            style="@style/SettingsMenuImageButtonStyle"
             android:src="@drawable/ic_setting_menu_docs">
         </ImageButton>
 

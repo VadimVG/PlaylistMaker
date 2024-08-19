@@ -12,8 +12,7 @@ class MediaActivity: AppCompatActivity() {
 
         val btback: ImageButton = findViewById<ImageButton>(R.id.mediaBack)
         btback.setOnClickListener{
-            val backIntent = Intent(this, MainActivity::class.java)
-            startActivity(backIntent)
+            finish()
         }
     }
 }

@@ -1,18 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    <style name="Theme.PlaylistMaker.Base.MainMenu" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:background">@color/light_mode_background</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="BaseThemeSetting" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PlaylistMaker.Base.Settings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/dark</item>
-    </style>
-
-    <style name="DarkTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:background">@color/dark_mode_background</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

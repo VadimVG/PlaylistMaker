@@ -7,4 +7,9 @@
     <string name="setting_menu_support">Написать в поддержку</string>
     <string name="setting_menu_docs">Пользовательское соглашение</string>
     <string name="setting_menu_dark_mode">Темная тема</string>
+    <string name="share_message">https://practicum.yandex.ru/profile/android-developer-plus/</string>
+    <string name="support_theme_message">Сообщение разработчикам и разработчицам приложения Playlist Maker/</string>
+    <string name="support_text_message">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="docs_message"> https://yandex.ru/legal/practicum_offer/</string>
+    <string name="user_email"> blanshetk@ya.ru</string>
 </resources>
