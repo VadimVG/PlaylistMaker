@@ -17,8 +17,8 @@ class SettingsActivity: AppCompatActivity()  {
             finish()
         }
 
-        val llShare: LinearLayout = findViewById<LinearLayout>(R.id.settingsShare)
-        llShare.setOnClickListener{
+        val tvShare: TextView = findViewById<TextView>(R.id.settingsShare)
+        tvShare.setOnClickListener{
             val shareMessage = getString(R.string.share_message)
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
@@ -26,8 +26,8 @@ class SettingsActivity: AppCompatActivity()  {
             startActivity(Intent.createChooser(shareIntent, null))
         }
 
-        val llSupport: LinearLayout =  findViewById<LinearLayout>(R.id.settingsSupport)
-        llSupport.setOnClickListener{
+        val tvSupport: TextView =  findViewById<TextView>(R.id.settingsSupport)
+        tvSupport.setOnClickListener{
             val message1 = getString(R.string.support_theme_message)
             val message2 = getString(R.string.support_text_message)
 
@@ -39,8 +39,8 @@ class SettingsActivity: AppCompatActivity()  {
             startActivity(supportIntent)
         }
 
-        val llDocs: LinearLayout = findViewById<LinearLayout>(R.id.settingsDocs)
-        llDocs.setOnClickListener{
+        val tvDocs: TextView = findViewById<TextView>(R.id.settingsDocs)
+        tvDocs.setOnClickListener{
             val docsMessage = getString(R.string.docs_message)
             val docsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(docsMessage))
             startActivity(docsIntent)

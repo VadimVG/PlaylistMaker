@@ -18,16 +18,15 @@
     <style name="SettingsMenuTextViewStyle">
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">start</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="android:textColor">@color/dark</item>
         <item name="fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="SettingsMenuImageButtonStyle">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">16dp</item>
         <item name="android:background">@color/white</item>
     </style>
+
 
     <style name="SettingsMenuBackTextViewStyle">
         <item name="android:background">@color/white</item>
@@ -43,11 +42,6 @@
         <item name="drawableLeftCompat">@drawable/ic_setting_menu_back</item>
     </style>
 
-
-    <style name="SettingsMenuLinearLayoutStyle">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:padding">16dp</item>
-    </style>
 
     <style name="SearchMenuTextViewStyle">
         <item name="android:background">@color/white</item>
