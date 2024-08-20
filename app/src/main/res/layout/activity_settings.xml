@@ -14,30 +14,14 @@
     </TextView>
 
 
-
-    <LinearLayout
-        android:id="@+id/settingsControl"
-        android:layout_width ="match_parent"
-        android:layout_height = "wrap_content"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/changeTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_menu_dark_mode"
         style="@style/SettingsMenuLinearLayoutStyle">
 
-        <TextView
-            android:layout_width ="match_parent"
-            android:layout_height = "wrap_content"
-            style="@style/SettingsMenuTextViewStyle"
-            android:text="@string/setting_menu_dark_mode">
-        </TextView>
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_gravity="center"
-            tools:ignore="UseSwitchCompatOrMaterialXml">
-
-        </Switch>
-    </LinearLayout>
-
+    </com.google.android.material.switchmaterial.SwitchMaterial>
     <LinearLayout
         android:id="@+id/settingsShare"
         android:layout_width ="match_parent"
