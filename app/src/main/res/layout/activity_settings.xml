@@ -16,6 +16,7 @@
 
 
     <LinearLayout
+        android:id="@+id/settingsControl"
         android:layout_width ="match_parent"
         android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
@@ -28,7 +29,6 @@
         </TextView>
 
         <Switch
-            android:id="@+id/settingsControl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
@@ -39,6 +39,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/settingsShare"
         android:layout_width ="match_parent"
         android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
@@ -50,7 +51,6 @@
         </TextView>
 
         <ImageButton
-            android:id="@+id/settingsShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_setting_menu_share"
@@ -62,6 +62,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/settingsSupport"
         android:layout_width ="match_parent"
         android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
@@ -74,7 +75,6 @@
         </TextView>
 
         <ImageButton
-            android:id="@+id/settingsSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -86,6 +86,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/settingsDocs"
         android:layout_width ="match_parent"
         android:layout_height = "wrap_content"
         style="@style/SettingsMenuLinearLayoutStyle">
@@ -98,7 +99,6 @@
         </TextView>
 
         <ImageButton
-            android:id="@+id/settingsDocs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
