@@ -3,4 +3,8 @@
     <dimen name="cornerRadius">16dp</dimen>
     <dimen name="iconPadding">8dp</dimen>
     <dimen name="padding">16dp</dimen>
+    <dimen name="layout_width_height">45dp</dimen>
+    <dimen name="layout_marginHorizontal">5dp</dimen>
+    <dimen name="layout_height_search">36dp</dimen>
+    <dimen name="paddingStart_search">9dp</dimen>
 </resources>
