@@ -1,115 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings"
     tools:context=".SettingsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/BaseThemeSetting"
+    android:theme="@style/Theme.PlaylistMaker.Base.Settings"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/settingsBack"
+        style="@style/SettingsMenuBackTextViewStyle" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/changeTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:text="@string/setting_menu_dark_mode"
+        style="@style/SettingsMenuTextViewStyle">
+    </com.google.android.material.switchmaterial.SwitchMaterial>
 
-        <ImageButton
-            android:id="@+id/settingsBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/ic_setting_menu_back">
-        </ImageButton>
+    <TextView
+        android:id="@+id/settingsShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/SettingsMenuTextViewStyle"
+        android:text="@string/setting_menu_share"
+        app:drawableEndCompat="@drawable/ic_setting_menu_share" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="start"
-            android:text="@string/main_menu_settings"
-            android:textSize="26sp">
-        </TextView>
+    <TextView
+        android:id="@+id/settingsSupport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/SettingsMenuTextViewStyle"
+        android:text="@string/setting_menu_support"
+        app:drawableEndCompat="@drawable/ic_setting_menu_support" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/SettingsMenuLinearLayoutStyle">
-
-        <TextView
-            style="@style/SettingsMenuTextViewStyle"
-            android:text="@string/setting_menu_dark_mode">
-        </TextView>
-
-        <Switch
-            android:id="@+id/settingsControl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_gravity="center"
-            tools:ignore="UseSwitchCompatOrMaterialXml">
-
-        </Switch>
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/SettingsMenuLinearLayoutStyle">
-        <TextView
-            style="@style/SettingsMenuTextViewStyle"
-            android:text="@string/setting_menu_share">
-        </TextView>
-
-        <ImageButton
-            android:id="@+id/settingsShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setting_menu_share"
-            android:gravity="end"
-            android:background="@color/white"
-            android:layout_gravity="center">
-        </ImageButton>
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/SettingsMenuLinearLayoutStyle">
-
-        <TextView
-            style="@style/SettingsMenuTextViewStyle"
-            android:text="@string/setting_menu_support">
-        </TextView>
-
-        <ImageButton
-            android:id="@+id/settingsSupport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="end"
-            android:background="@color/white"
-            android:src="@drawable/ic_setting_menu_support">
-        </ImageButton>
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/SettingsMenuLinearLayoutStyle">
-
-        <TextView
-            style="@style/SettingsMenuTextViewStyle"
-            android:text="@string/setting_menu_docs">
-        </TextView>
-
-        <ImageButton
-            android:id="@+id/settingsDocs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="end"
-            android:background="@color/white"
-            android:src="@drawable/ic_setting_menu_docs">
-        </ImageButton>
-
-    </LinearLayout>
-
+    <TextView
+        android:id="@+id/settingsDocs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/SettingsMenuTextViewStyle"
+        android:text="@string/setting_menu_docs"
+        app:drawableEndCompat="@drawable/ic_setting_menu_docs" />
 
 </LinearLayout>

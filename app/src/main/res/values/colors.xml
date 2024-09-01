@@ -6,4 +6,5 @@
     <color name="light_mode_background">#3772E7</color>
     <color name="dark_mode_background">#1A1B22</color>
     <color name="switch_mode">#AEAFB4</color>
+    <color name="gray"> #AEAFB4 </color>
 </resources>

@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    android:theme="@style/BaseTheme"
+    android:theme="@style/Theme.PlaylistMaker.Base.MainMenu"
     android:orientation="vertical">
 
 
@@ -26,37 +26,30 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/padding">
 
-        <Button
+            <Button
             android:id="@+id/btSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             style="@style/MainMenuButtonStyle"
             android:text="@string/main_menu_search"
-            app:cornerRadius="@dimen/cornerRadius"
-            app:icon="@drawable/ic_main_menu_search"
-            app:iconGravity="textStart"
-            app:iconPadding="@dimen/iconPadding"
-            app:iconTint="@color/dark" />
+            app:icon="@drawable/ic_main_menu_search" />
 
 
         <Button
             android:id="@+id/btMedia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             style="@style/MainMenuButtonStyle"
             android:text="@string/main_menu_media"
-            app:cornerRadius="@dimen/cornerRadius"
-            app:icon="@drawable/ic_main_menu_media"
-            app:iconGravity="textStart"
-            app:iconPadding="@dimen/iconPadding"
-            app:iconTint="@color/dark" />
+            app:icon="@drawable/ic_main_menu_media" />
 
         <Button
             android:id="@+id/btSettings"
             style="@style/MainMenuButtonStyle"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/main_menu_settings"
-            app:cornerRadius="@dimen/cornerRadius"
-            app:icon="@drawable/ic_main_menu_settings"
-            app:iconGravity="textStart"
-            app:iconPadding="@dimen/iconPadding"
-            app:iconTint="@color/dark" />
+            app:icon="@drawable/ic_main_menu_settings" />
 
     </LinearLayout>
 
