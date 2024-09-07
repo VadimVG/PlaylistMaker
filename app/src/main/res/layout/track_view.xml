@@ -2,13 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="61dp"
-    android:paddingHorizontal="15dp">
+    android:layout_height="61dp">
 
     <ImageView
         android:id="@+id/trackLogo"
         android:layout_width="@dimen/layout_width_height"
         android:layout_height="@dimen/layout_width_height"
+        android:layout_marginStart="@dimen/layout_marginStart_search"
         android:layout_gravity="center_vertical" />
 
     <LinearLayout

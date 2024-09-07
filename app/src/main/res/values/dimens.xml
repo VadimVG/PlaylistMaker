@@ -7,4 +7,5 @@
     <dimen name="layout_marginHorizontal">5dp</dimen>
     <dimen name="layout_height_search">36dp</dimen>
     <dimen name="paddingStart_search">9dp</dimen>
+    <dimen name="layout_marginStart_search">13dp</dimen>
 </resources>
