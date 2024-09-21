@@ -11,6 +11,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.search.TestTrackList
+import com.example.playlistmaker.search.TrackAdapter
 
 class SearchActivity: AppCompatActivity() {
 
@@ -49,6 +53,10 @@ class SearchActivity: AppCompatActivity() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
+
+        val rvTrackList = findViewById<RecyclerView>(R.id.trackList)
+        rvTrackList.layoutManager = LinearLayoutManager(this)
+        rvTrackList.adapter = TrackAdapter(TestTrackList().trackList)
     }
 
     // настройка видимости кнопки для удаления текста из строки поиска
@@ -65,6 +73,7 @@ class SearchActivity: AppCompatActivity() {
         searchText = savedInstanceState.getString(SEARCH_KEY).toString()
         super.onRestoreInstanceState(savedInstanceState)
     }
+
 
     companion object {
         private const val SEARCH_KEY = "KEY_STRING"
