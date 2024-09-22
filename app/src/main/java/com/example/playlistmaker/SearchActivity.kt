@@ -152,6 +152,9 @@ class SearchActivity: AppCompatActivity() {
     private fun showErrorMessage(text: String, type: Int) {
         if (text.isNotEmpty()) {
             errorText.visibility = View.VISIBLE
+            errorNotFound.visibility = View.GONE
+            errorWentWrong.visibility = View.GONE
+            refreshBt.visibility = View.GONE
             tracks.clear()
             tracksAdapter.notifyDataSetChanged()
             errorText.text = text
