@@ -49,10 +49,46 @@
 
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/trackList"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trackList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/cornerRadius"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/track_view" />
+
+        <ImageView
+            android:id="@+id/nothing_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/NothingFound"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/something_went_wrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SomethingWentWrong"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ErrorMessage"
+            android:visibility="gone"
+            tools:text="ERROR" />
+
+        <Button
+            android:id="@+id/refreshButton"
+            android:layout_width="wrap_content"
+            style="@style/RefreshErrorButton"
+            android:visibility="gone"/>
+    </FrameLayout>
 
 </LinearLayout>
