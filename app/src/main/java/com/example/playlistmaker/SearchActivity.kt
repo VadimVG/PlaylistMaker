@@ -34,13 +34,14 @@ class SearchActivity: AppCompatActivity() {
 
 
     private lateinit var tvBack: TextView
+
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
-
     private var searchText : String = SEARCH_TEXT
+
     private var clientRequest:String =""
-    private val tracks = ArrayList<Track>()
-    private val tracksAdapter = TrackAdapter(tracks)
+    private lateinit var tracks: ArrayList<Track>
+    private lateinit var tracksAdapter: TrackAdapter
     private val iTunesBaseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
                                     .baseUrl(iTunesBaseUrl)
@@ -58,22 +59,25 @@ class SearchActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.search)) { v, insets -> // пока непонятно, что это, уточнить
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+
         tvBack = findViewById<TextView>(R.id.settingsBack)
         inputEditText = findViewById<EditText>(R.id.inputEditText)
         clearButton = findViewById<ImageView>(R.id.clearIcon)
+        tracks = ArrayList<Track>()
+        tracksAdapter = TrackAdapter(tracks)
         errorText = findViewById(R.id.errorMessage)
         errorNotFound = findViewById(R.id.nothing_found)
         errorWentWrong = findViewById(R.id.something_went_wrong)
         refreshBt = findViewById(R.id.refreshButton)
         recyclerView = findViewById<RecyclerView>(R.id.trackList)
         recyclerView.adapter = tracksAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
         tvBack.setOnClickListener{ finish() } // возвращение на главный экран
