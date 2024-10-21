@@ -44,7 +44,7 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var tracksAdapter: TrackAdapter
     private val iTunesBaseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
-                                    .baseUrl(iTunesBaseUrl)
+                                    .baseUrl(iTunesBaseUrl)// передача базовго url
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build()
     private val iTunesApi = retrofit.create(ITunesApi::class.java)
@@ -137,16 +137,10 @@ class SearchActivity: AppCompatActivity() {
                         tracks.addAll(response.body()?.results!!)
                         tracksAdapter.notifyDataSetChanged()
                     }
-                    if (tracks.isEmpty()) {
-                        showErrorMessage(getString(R.string.nothing_found), 1)
-                    }
-                    else {
-                        showErrorMessage("", 2)
-                    }
+                    if (tracks.isEmpty()) showErrorMessage(getString(R.string.nothing_found), 1)
+                    else showErrorMessage("", 2)
                 }
-                else {
-                    showErrorMessage(getString(R.string.something_went_wrong), 2)
-                }
+                else showErrorMessage(getString(R.string.something_went_wrong), 2)
             }
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
@@ -179,10 +173,7 @@ class SearchActivity: AppCompatActivity() {
     }
 
 
-    private fun clearButtonVisibility(s: CharSequence?): Int {
-        return if (s.isNullOrEmpty()) View.GONE else View.VISIBLE // настройка видимости кнопки для удаления текста из строки поиска
-    }
-
+    private fun clearButtonVisibility(s: CharSequence?): Int = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE // настройка видимости кнопки для удаления текста из строки поиска
 
     override fun onSaveInstanceState(outState: Bundle) { // сохранение введенного текста из строки поиска (состояния) перед уничтожением активити
         outState.putString(SEARCH_KEY, searchText)
