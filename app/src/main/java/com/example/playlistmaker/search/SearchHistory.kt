@@ -21,7 +21,7 @@ class SearchHistory(
         arrayList.add(0, track)
         if (arrayList.size > 10) arrayList.removeAt(maxSize)
         save(arrayList)
-
+        Log.d("SearchHistory add", track.toString())
     }
 
     fun clear() {
@@ -35,7 +35,5 @@ class SearchHistory(
         sharedPreferences.edit()
             .putString(SearchHistorySharedPrefsConst.ARRAY_LIST_KEY, json)
             .apply()
-
-        Log.d("", "Сохранили значение ${tracks.toString()}")
     }
 }

@@ -61,6 +61,8 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var youSearch: TextView
     private lateinit var searchHistorySharedPrefs: SharedPreferences
     private lateinit var searchHistory: SearchHistory
+    private lateinit var searchHistoryAdapter: TrackAdapter
+    private lateinit var searchHistoryArr: ArrayList<Track>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +91,13 @@ class SearchActivity: AppCompatActivity() {
 
         searchHistorySharedPrefs = getSharedPreferences(SearchHistorySharedPrefsConst.PREFERENCES_KEY, MODE_PRIVATE)
         searchHistory = SearchHistory(searchHistorySharedPrefs)
+        searchHistoryArr = ArrayList<Track>()
+        searchHistoryAdapter = TrackAdapter(searchHistoryArr)
+        searchHistoryAdapter.onItemClickListener = { track ->
+            Log.d("onItemClickListener", "!!!!!!!!!!!!!!!!!!!!")
+            searchHistory.add(track)
+        }
+//        recyclerView.adapter = searchHistoryAdapter
 
         clearHistory = findViewById(R.id.clearHistory)
 
