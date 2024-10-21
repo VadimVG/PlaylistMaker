@@ -23,16 +23,12 @@ class SettingsActivity: AppCompatActivity()  {
         setContentView(R.layout.activity_settings)
 
         val tvBack: TextView = findViewById<TextView>(R.id.settingsBack)
-        tvBack.setOnClickListener{
-            finish()
-        }
+        tvBack.setOnClickListener{ finish() }
+
 
         themeSwitcher = findViewById(R.id.themeSwitcher)
-
         sharedPreferences = getSharedPreferences(APP_THEME_PREFERENCES, MODE_PRIVATE)
-
         themeSwitcher.isChecked = (applicationContext as App).darkTheme
-
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
             (applicationContext as App).switchTheme(checked)
             saveThemePreferences(checked)
