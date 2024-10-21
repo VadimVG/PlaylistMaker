@@ -3,6 +3,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.search.ITunesApi
 import com.example.playlistmaker.search.ITunesResponse
+import com.example.playlistmaker.search.SearchHistory
+import com.example.playlistmaker.search.SearchHistorySharedPrefsConst
 import com.example.playlistmaker.search.Track
 import com.example.playlistmaker.search.TrackAdapter
 import retrofit2.Call
@@ -54,6 +57,10 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var errorNotFound: ImageView
     private lateinit var errorWentWrong: ImageView
     private lateinit var refreshBt: Button
+    private lateinit var clearHistory: Button
+    private lateinit var youSearch: TextView
+    private lateinit var searchHistorySharedPrefs: SharedPreferences
+    private lateinit var searchHistory: SearchHistory
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +76,7 @@ class SearchActivity: AppCompatActivity() {
         tvBack = findViewById<TextView>(R.id.settingsBack)
         inputEditText = findViewById<EditText>(R.id.inputEditText)
         clearButton = findViewById<ImageView>(R.id.clearIcon)
+        youSearch = findViewById<TextView>(R.id.youSearch)
         tracks = ArrayList<Track>()
         tracksAdapter = TrackAdapter(tracks)
         errorText = findViewById(R.id.errorMessage)
@@ -78,6 +86,11 @@ class SearchActivity: AppCompatActivity() {
         recyclerView = findViewById<RecyclerView>(R.id.trackList)
         recyclerView.adapter = tracksAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        searchHistorySharedPrefs = getSharedPreferences(SearchHistorySharedPrefsConst.PREFERENCES_KEY, MODE_PRIVATE)
+        searchHistory = SearchHistory(searchHistorySharedPrefs)
+
+        clearHistory = findViewById(R.id.clearHistory)
 
 
         tvBack.setOnClickListener{ finish() } // возвращение на главный экран
@@ -104,6 +117,26 @@ class SearchActivity: AppCompatActivity() {
             }
             false
         }
+
+        inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
+            youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
+            clearHistory.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
+        }
+
+        inputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // отображение истории поиска
+                youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
+                clearHistory.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
+                errorText.visibility = View.GONE
+                errorNotFound.visibility = View.GONE
+                errorWentWrong.visibility = View.GONE
+                refreshBt.visibility = View.GONE
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
 
 
         refreshBt.setOnClickListener { search(clientRequest) } // отправка повторного запроса, если что-то пошло не так
@@ -189,5 +222,6 @@ class SearchActivity: AppCompatActivity() {
         private const val SEARCH_KEY = "KEY_STRING" // ключ, по которому сохраняется и восстанавливается значение InstanceState
         private const val SEARCH_TEXT = "" // значение по умолчанию
     }
+
 
 }
