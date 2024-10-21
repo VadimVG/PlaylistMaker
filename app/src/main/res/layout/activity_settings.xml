@@ -14,7 +14,7 @@
         style="@style/SettingsMenuBackTextViewStyle" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/changeTheme"
+        android:id="@+id/themeSwitcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/setting_menu_dark_mode"
