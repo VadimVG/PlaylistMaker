@@ -152,10 +152,13 @@ class SearchActivity: AppCompatActivity() {
                 else {
                     recyclerView.adapter  = tracksAdapter
                 }
+
                 errorText.visibility = View.GONE
                 errorNotFound.visibility = View.GONE
                 errorWentWrong.visibility = View.GONE
                 refreshBt.visibility = View.GONE
+                youSearch.visibility = View.GONE
+                clearHistory.visibility = View.GONE
             }
 
             override fun afterTextChanged(p0: Editable?) {}
