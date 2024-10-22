@@ -19,7 +19,7 @@ class SearchHistory(
         val arrayList: ArrayList<Track> = get()
         if (arrayList.size > 0) arrayList.removeIf { it -> it.trackId == track.trackId }
         arrayList.add(0, track)
-        if (arrayList.size > 10) arrayList.removeAt(maxSize)
+        if (arrayList.size > maxSize) arrayList.removeAt(maxSize)
         save(arrayList)
         Log.d("SearchHistory add", track.toString())
     }
