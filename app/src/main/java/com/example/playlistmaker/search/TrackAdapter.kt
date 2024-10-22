@@ -26,7 +26,6 @@ class TrackAdapter (
         holder.bind(tracks[position])
         holder.itemView.setOnClickListener{
             onItemClickListener?.invoke(tracks[position])
-            Log.d("TrackAdapter", tracks[position].toString())
         }
     }
 

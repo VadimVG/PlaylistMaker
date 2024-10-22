@@ -61,8 +61,8 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var youSearch: TextView
     private lateinit var searchHistorySharedPrefs: SharedPreferences
     private lateinit var searchHistory: SearchHistory
-    private lateinit var searchHistoryAdapter: TrackAdapter
-    private lateinit var searchHistoryArr: ArrayList<Track>
+    private lateinit var searchHistoryTracks: ArrayList<Track>
+    private lateinit var searchHistoryTracksAdapter: TrackAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,19 +86,15 @@ class SearchActivity: AppCompatActivity() {
         errorWentWrong = findViewById(R.id.something_went_wrong)
         refreshBt = findViewById(R.id.refreshButton)
         recyclerView = findViewById<RecyclerView>(R.id.trackList)
-        recyclerView.adapter = tracksAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        searchHistorySharedPrefs = getSharedPreferences(SearchHistorySharedPrefsConst.PREFERENCES_KEY, MODE_PRIVATE)
+        searchHistorySharedPrefs = getSharedPreferences(SearchHistorySharedPrefsConst.PREFERENCES_KEY, MODE_PRIVATE)// получаем экземпляр класса SharedPreferences
         searchHistory = SearchHistory(searchHistorySharedPrefs)
-        searchHistoryArr = ArrayList<Track>()
-        searchHistoryAdapter = TrackAdapter(searchHistoryArr)
-        searchHistoryAdapter.onItemClickListener = { track ->
-            Log.d("onItemClickListener", "!!!!!!!!!!!!!!!!!!!!")
+        tracksAdapter.onItemClickListener = { track -> // сохраняем трек, на который кликнул пользователь, в файл sharedPreferences
             searchHistory.add(track)
         }
-//        recyclerView.adapter = searchHistoryAdapter
-
+//        searchHistoryTracks = searchHistory.get()
+//        searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
         clearHistory = findViewById(R.id.clearHistory)
 
 
@@ -130,6 +126,14 @@ class SearchActivity: AppCompatActivity() {
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
             youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
             clearHistory.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
+            if (hasFocus && inputEditText.text.isEmpty()) {
+                searchHistoryTracks = searchHistory.get()
+                searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
+                recyclerView.adapter = searchHistoryTracksAdapter
+            }
+            else {
+                recyclerView.adapter = tracksAdapter
+            }
         }
 
         inputEditText.addTextChangedListener(object : TextWatcher {
@@ -138,6 +142,12 @@ class SearchActivity: AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // отображение истории поиска
                 youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
                 clearHistory.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
+                if (inputEditText.hasFocus() && p0?.isEmpty() == true) {
+                    recyclerView.adapter = searchHistoryTracksAdapter
+                }
+                else {
+                    recyclerView.adapter  = tracksAdapter
+                }
                 errorText.visibility = View.GONE
                 errorNotFound.visibility = View.GONE
                 errorWentWrong.visibility = View.GONE
@@ -148,6 +158,11 @@ class SearchActivity: AppCompatActivity() {
         })
 
 
+        clearHistory.setOnClickListener{
+            searchHistoryTracks.clear()
+            searchHistory.clear()
+            searchHistoryTracksAdapter.notifyDataSetChanged()
+        }
         refreshBt.setOnClickListener { search(clientRequest) } // отправка повторного запроса, если что-то пошло не так
 
 
