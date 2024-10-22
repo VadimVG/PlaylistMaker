@@ -124,10 +124,12 @@ class SearchActivity: AppCompatActivity() {
         }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
-            youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
-            clearHistory.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
+//            youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
+//            clearHistory.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
             if (hasFocus && inputEditText.text.isEmpty()) {
                 searchHistoryTracks = searchHistory.get()
+                youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+                clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                 searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
                 recyclerView.adapter = searchHistoryTracksAdapter
             }
@@ -140,9 +142,11 @@ class SearchActivity: AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // отображение истории поиска
-                youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
-                clearHistory.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
+//                youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
+//                clearHistory.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
                 if (inputEditText.hasFocus() && p0?.isEmpty() == true) {
+                    youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+                    clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                     recyclerView.adapter = searchHistoryTracksAdapter
                 }
                 else {
@@ -162,6 +166,8 @@ class SearchActivity: AppCompatActivity() {
             searchHistoryTracks.clear()
             searchHistory.clear()
             searchHistoryTracksAdapter.notifyDataSetChanged()
+            youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+            clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
         }
         refreshBt.setOnClickListener { search(clientRequest) } // отправка повторного запроса, если что-то пошло не так
 
