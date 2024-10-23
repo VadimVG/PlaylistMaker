@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center"
             android:background="@drawable/edit_text_background"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:padding="10dp"
+            android:src="@drawable/ic_clear_icon"
             android:visibility="gone" />
 
     </FrameLayout>

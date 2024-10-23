@@ -7,4 +7,5 @@
     <color name="dark_mode_background">#1A1B22</color>
     <color name="switch_mode">#AEAFB4</color>
     <color name="gray"> #AEAFB4 </color>
+    <color name="clear_icon"> #AEAFB4 </color>
 </resources>
