@@ -83,10 +83,10 @@
 
     <ImageView
         android:id="@+id/trackPause"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/leftBorder"
-        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintStart_toStartOf="@id/trackAdd"
+        app:layout_constraintEnd_toEndOf="@id/trackLike"
         app:layout_constraintTop_toBottomOf="@id/trackArtist"
         android:layout_marginTop="30dp"
         android:src="@drawable/ic_pause_audioplayer"
@@ -94,19 +94,20 @@
 
     <TextView
         android:id="@+id/currentTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="4dp"
         android:text="0:30"
-        android:textColor="@color/dark"
+        android:textColor="@color/pause_icon"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/rightBorder"
-        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintEnd_toEndOf="@id/trackPause"
+        app:layout_constraintStart_toStartOf="@id/trackPause"
         app:layout_constraintTop_toBottomOf="@id/trackPause" />
 
     <ImageView
         android:id="@+id/trackAdd"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/trackArtist"
@@ -124,8 +125,8 @@
 
     <TextView
         android:id="@+id/trackDuration"
-        style="@style/AudioplayerViews"
-        android:layout_width="0dp"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/currentTime"
@@ -148,7 +149,7 @@
 
     <TextView
         android:id="@+id/trackAlbum"
-        style="@style/AudioplayerViews"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
@@ -175,7 +176,7 @@
 
     <TextView
         android:id="@+id/trackYear"
-        style="@style/AudioplayerViews"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
@@ -203,7 +204,7 @@
 
     <TextView
         android:id="@+id/trackGenre"
-        style="@style/AudioplayerViews"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
@@ -230,7 +231,7 @@
 
     <TextView
         android:id="@+id/trackCountry"
-        style="@style/AudioplayerViews"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
