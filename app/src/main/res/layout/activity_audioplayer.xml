@@ -22,9 +22,9 @@
         android:layout_height="wrap_content"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/lcenterBorder"
+        android:id="@+id/centerBorder"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="140dp"
+        app:layout_constraintGuide_percent="0.5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -155,7 +155,7 @@
         android:id="@+id/trackAlbum2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/lcenterBorder"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
         app:layout_constraintTop_toBottomOf="@id/trackDuration"
         android:layout_marginTop="9dp"
@@ -180,7 +180,7 @@
         android:id="@+id/trackYear2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/lcenterBorder"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
         app:layout_constraintTop_toBottomOf="@id/trackAlbum"
         android:layout_marginTop="9dp"
@@ -206,7 +206,7 @@
         android:id="@+id/trackGenre2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/lcenterBorder"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
         app:layout_constraintTop_toBottomOf="@id/trackYear"
         android:layout_marginTop="9dp"
@@ -231,7 +231,7 @@
         android:id="@+id/trackCountry2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/lcenterBorder"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
         app:layout_constraintTop_toBottomOf="@id/trackGenre"
         android:layout_marginTop="9dp"
