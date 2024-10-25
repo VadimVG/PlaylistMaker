@@ -66,7 +66,7 @@ class AudioPlayerActivity: AppCompatActivity() {
             .placeholder(R.drawable.ic_placeholder_audioplayer)
             .error(R.drawable.ic_placeholder_audioplayer)
             .centerCrop()
-            .transform(RoundedCorners(10))
+            .transform(RoundedCorners(16))
             .into(trackLogo)
     }
 
