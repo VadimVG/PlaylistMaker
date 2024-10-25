@@ -47,8 +47,7 @@
         app:layout_constraintTop_toBottomOf="@id/audioplayerBack"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
-        tools:src="@drawable/ic_track_logo_placeholder"
-        android:backgroundTint="@color/white" />
+        tools:src="@drawable/ic_track_logo_placeholder" />
 
 
     <TextView
