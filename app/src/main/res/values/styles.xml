@@ -149,4 +149,14 @@
         <item name="android:fontWeight">500</item>
     </style>
 
+    <style name="AudioplayerViews">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="AudioplayerViewsValues">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
 </resources>

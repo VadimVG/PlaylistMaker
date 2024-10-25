@@ -53,6 +53,7 @@
 
     <TextView
         android:id="@+id/trackName"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
@@ -60,12 +61,15 @@
         app:layout_constraintTop_toBottomOf="@id/trackLogo"
         android:layout_marginTop="24dp"
         android:textSize="22sp"
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="400"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="Smells Like Teen Spirit" />
 
     <TextView
         android:id="@+id/trackArtist"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
@@ -120,17 +124,19 @@
 
     <TextView
         android:id="@+id/trackDuration"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/currentTime"
         android:layout_marginTop="39dp"
         android:layout_marginBottom="8dp"
-        android:text="Длительность"
+        android:text="@string/track_duration"
         android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/trackDuration2"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
@@ -142,17 +148,19 @@
 
     <TextView
         android:id="@+id/trackAlbum"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/trackDuration"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="8dp"
-        android:text="Альбом"
+        android:text="@string/album_name"
         android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/trackAlbum2"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/centerBorder"
@@ -167,17 +175,19 @@
 
     <TextView
         android:id="@+id/trackYear"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/trackAlbum"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="8dp"
-        android:text="Год"
+        android:text="@string/track_year"
         android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/trackYear2"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/centerBorder"
@@ -193,17 +203,19 @@
 
     <TextView
         android:id="@+id/trackGenre"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/trackYear"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="8dp"
-        android:text="Жанр"
+        android:text="@string/track_genre"
         android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/trackGenre2"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/centerBorder"
@@ -218,17 +230,19 @@
 
     <TextView
         android:id="@+id/trackCountry"
+        style="@style/AudioplayerViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/trackGenre"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="8dp"
-        android:text="Страна"
+        android:text="@string/track_country"
         android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/trackCountry2"
+        style="@style/AudioplayerViewsValues"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/centerBorder"
