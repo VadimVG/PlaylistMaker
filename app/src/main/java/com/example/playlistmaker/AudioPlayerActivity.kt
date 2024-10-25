@@ -24,7 +24,7 @@ class AudioPlayerActivity: AppCompatActivity() {
         findViewById<TextView>(R.id.audioplayerBack).setOnClickListener{ finish() } // возвращение на главный экран
 
         val currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track
-        Log.d("currentTrack", "${currentTrack.trackName}, ${currentTrack.collectionName} ${currentTrack.collectionName?.length}")
+//        Log.d("currentTrack", "${currentTrack.trackName}, ${currentTrack.country}")
         createAlbumСover(currentTrack)
     }
 

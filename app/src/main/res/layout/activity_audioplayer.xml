@@ -253,7 +253,7 @@
         android:gravity="end"
         android:maxLines="1"
         android:ellipsize="end"
-        tools:text = "USA"/>
+        tools:text = "Country"/>
 
 
 
