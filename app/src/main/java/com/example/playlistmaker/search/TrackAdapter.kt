@@ -24,6 +24,7 @@ class TrackAdapter (
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(tracks[position])
+        holder.setIsRecyclable(false)
         holder.itemView.setOnClickListener{
             onItemClickListener?.invoke(tracks[position])
         }
