@@ -1,10 +1,8 @@
 package com.example.playlistmaker.search
 
-import android.content.SharedPreferences
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 
@@ -24,7 +22,7 @@ class TrackAdapter (
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(tracks[position])
-        holder.setIsRecyclable(false)
+//        holder.setIsRecyclable(false)
         holder.itemView.setOnClickListener{
             onItemClickListener?.invoke(tracks[position])
         }
