@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AudioPlayerActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/Theme.PlaylistMaker.Base.Settings">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorder"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorder"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/centerBorder"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/audioplayerBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableLeftCompat = "@drawable/ic_setting_menu_back">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/trackLogo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="26dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintTop_toBottomOf="@id/audioplayerBack"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        tools:src="@drawable/ic_track_logo_placeholder" />
+
+
+    <TextView
+        android:id="@+id/trackName"
+        style="@style/AudioplayerViews"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackLogo"
+        android:layout_marginTop="24dp"
+        android:textSize="22sp"
+        android:fontFamily="@font/ys_display_medium"
+        android:textFontWeight="400"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Smells Like Teen Spirit" />
+
+    <TextView
+        android:id="@+id/trackArtist"
+        style="@style/AudioplayerViews"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackName"
+        android:layout_marginTop="12dp"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="Nirvana" />
+
+    <ImageView
+        android:id="@+id/trackPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/trackAdd"
+        app:layout_constraintEnd_toEndOf="@id/trackLike"
+        app:layout_constraintTop_toBottomOf="@id/trackArtist"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_pause_audioplayer"
+        />
+
+    <TextView
+        android:id="@+id/currentTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:text="0:30"
+        android:textColor="@color/pause_icon"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/trackPause"
+        app:layout_constraintStart_toStartOf="@id/trackPause"
+        app:layout_constraintTop_toBottomOf="@id/trackPause" />
+
+    <ImageView
+        android:id="@+id/trackAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackArtist"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_add_button_audioplayer" />
+
+    <ImageView
+        android:id="@+id/trackLike"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackArtist"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_like_button_audioplayer" />
+
+    <TextView
+        android:id="@+id/trackDuration"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/currentTime"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/track_duration"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/trackDuration2"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/currentTime"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="8dp"
+        tools:text = "5:35"/>
+
+
+    <TextView
+        android:id="@+id/trackAlbum"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackDuration"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/album_name"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/trackAlbum2"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackDuration"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text = "Soooooooooo loooooong aaaalbuuuum nameeeeeeeee"/>
+
+    <TextView
+        android:id="@+id/trackYear"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackAlbum"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/track_year"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/trackYear2"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackAlbum"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text = "2024"/>
+
+
+    <TextView
+        android:id="@+id/trackGenre"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackYear"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/track_genre"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/trackGenre2"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackYear"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text = "Rock"/>
+
+    <TextView
+        android:id="@+id/trackCountry"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackGenre"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/track_country"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/trackCountry2"
+        style="@style/AudioplayerViewsValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/centerBorder"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        app:layout_constraintTop_toBottomOf="@id/trackGenre"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text = "Country"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

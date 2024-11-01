@@ -3,6 +3,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -20,6 +21,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.search.AudioPlayerCurrentTrack
 import com.example.playlistmaker.search.ITunesApi
 import com.example.playlistmaker.search.ITunesResponse
 import com.example.playlistmaker.search.SearchHistory
@@ -92,9 +94,10 @@ class SearchActivity: AppCompatActivity() {
         searchHistory = SearchHistory(searchHistorySharedPrefs)
         tracksAdapter.onItemClickListener = { track -> // сохраняем трек, на который кликнул пользователь, в файл sharedPreferences
             searchHistory.add(track)
+            startAudioPlayerActivity(track)
         }
-//        searchHistoryTracks = searchHistory.get()
-//        searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
+
+
         clearHistory = findViewById(R.id.clearHistory)
 
 
@@ -124,14 +127,15 @@ class SearchActivity: AppCompatActivity() {
         }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
-//            youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
-//            clearHistory.visibility = if (hasFocus && inputEditText.text.isEmpty()) View.VISIBLE else View.GONE
             if (hasFocus && inputEditText.text.isEmpty()) {
                 searchHistoryTracks = searchHistory.get()
                 youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                 clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                 searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
                 recyclerView.adapter = searchHistoryTracksAdapter
+                searchHistoryTracksAdapter.onItemClickListener = {track ->
+                    startAudioPlayerActivity(track)
+                }
             }
             else {
                 recyclerView.adapter = tracksAdapter
@@ -142,8 +146,6 @@ class SearchActivity: AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // отображение истории поиска
-//                youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
-//                clearHistory.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true) View.VISIBLE else View.GONE
                 if (inputEditText.hasFocus() && p0?.isEmpty() == true) {
                     youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                     clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
@@ -249,6 +251,12 @@ class SearchActivity: AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) { // восстановление введенного текста из строки поиска после создания активити
         searchText = savedInstanceState.getString(SEARCH_KEY).toString()
         super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    private fun startAudioPlayerActivity(track: Track) {
+        val audioplayerIntent = Intent(this, AudioPlayerActivity::class.java)
+        audioplayerIntent.putExtra(AudioPlayerCurrentTrack.CURRENT_TRACK, track)
+        startActivity(audioplayerIntent)
     }
 
     companion object { // для создания константной переменной мы используем companion object
