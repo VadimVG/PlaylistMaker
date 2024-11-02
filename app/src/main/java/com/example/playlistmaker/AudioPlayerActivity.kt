@@ -41,7 +41,7 @@ class AudioPlayerActivity: AppCompatActivity() {
         artistName.text = track.artistName
 
         val trackName: TextView = this.findViewById(R.id.trackName)
-        trackName.text = track.artistName
+        trackName.text = track.trackName
 
         val trackAlbum: TextView = this.findViewById(R.id.trackAlbum)
         val trackAlbumValue: TextView = this.findViewById(R.id.trackAlbum2)
