@@ -103,12 +103,13 @@ class SearchActivity: AppCompatActivity() {
         searchHistorySharedPrefs = getSharedPreferences(SearchHistorySharedPrefsConst.PREFERENCES_KEY, MODE_PRIVATE)// получаем экземпляр класса SharedPreferences
         searchHistory = SearchHistory(searchHistorySharedPrefs)
         tracksAdapter.onItemClickListener = { track -> // сохраняем трек, на который кликнул пользователь, в файл sharedPreferences
-            searchHistory.add(track)
-            startAudioPlayerActivity(track)
+            if (clickDebounce()) {
+                searchHistory.add(track)
+                startAudioPlayerActivity(track)
+            }
         }
 
         progressBar = findViewById(R.id.progressBar)
-
 
 
         clearHistory = findViewById(R.id.clearHistory)
@@ -280,7 +281,7 @@ class SearchActivity: AppCompatActivity() {
         startActivity(audioplayerIntent)
     }
 
-    private fun clickDebounce(): Boolean {
+    private fun clickDebounce(): Boolean { // отлиженное вополнение какого-либо действия
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
@@ -289,7 +290,7 @@ class SearchActivity: AppCompatActivity() {
         return current
     }
 
-    private fun searchDebounce() {
+    private fun searchDebounce() { //  отправка запроса через указанное время
         handler.removeCallbacks(searchRunnable)
         handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
     }
