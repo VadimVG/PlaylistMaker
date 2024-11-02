@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -66,6 +68,11 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var searchHistoryTracks: ArrayList<Track>
     private lateinit var searchHistoryTracksAdapter: TrackAdapter
 
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
+    private val searchRunnable = Runnable { search() }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,17 +121,17 @@ class SearchActivity: AppCompatActivity() {
         }
 
 
-        inputEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (inputEditText.text.isNotEmpty()) {
-                    clientRequest = inputEditText.text.toString()
-                    Log.d("SearchActivity", "INPUT USER VALUE: $clientRequest")
-                    search(clientRequest)
-                }
-                true
-            }
-            false
-        }
+//        inputEditText.setOnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                if (inputEditText.text.isNotEmpty()) {
+//                    clientRequest = inputEditText.text.toString()
+//                    Log.d("SearchActivity", "INPUT USER VALUE: $clientRequest")
+//                    search()
+//                }
+//                true
+//            }
+//            false
+//        }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
             if (hasFocus && inputEditText.text.isEmpty()) {
@@ -153,6 +160,10 @@ class SearchActivity: AppCompatActivity() {
                 }
                 else {
                     recyclerView.adapter  = tracksAdapter
+                    if (p0?.isEmpty() == false) {
+                        clientRequest = inputEditText.text.toString()
+                        searchDebounce()
+                    }
                 }
 
                 errorText.visibility = View.GONE
@@ -174,7 +185,7 @@ class SearchActivity: AppCompatActivity() {
             youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
             clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
         }
-        refreshBt.setOnClickListener { search(clientRequest) } // отправка повторного запроса, если что-то пошло не так
+        refreshBt.setOnClickListener { search() } // отправка повторного запроса, если что-то пошло не так
 
 
         val simpleTextWatcher = object : TextWatcher {
@@ -193,7 +204,8 @@ class SearchActivity: AppCompatActivity() {
     }
 
 
-    private fun search(request: String) {
+    private fun search() {
+        val request: String = clientRequest
         Log.d("SearchActivity", "INPUT USER VALUE TO SEARCH FUNC: $clientRequest")
         iTunesApi.findSong(request).enqueue(object : Callback<ITunesResponse> {
             override fun onResponse(call: Call<ITunesResponse>, response: Response<ITunesResponse>) {
@@ -259,9 +271,26 @@ class SearchActivity: AppCompatActivity() {
         startActivity(audioplayerIntent)
     }
 
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY_MILLIS)
+        }
+        return current
+    }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
+    }
+
     companion object { // для создания константной переменной мы используем companion object
         private const val SEARCH_KEY = "KEY_STRING" // ключ, по которому сохраняется и восстанавливается значение InstanceState
         private const val SEARCH_TEXT = "" // значение по умолчанию
+
+        private const val CLICK_DEBOUNCE_DELAY_MILLIS = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 2000L
     }
 
 
