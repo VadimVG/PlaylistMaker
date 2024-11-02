@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -72,6 +73,8 @@ class SearchActivity: AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val searchRunnable = Runnable { search() }
 
+    private lateinit var progressBar: ProgressBar
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +106,9 @@ class SearchActivity: AppCompatActivity() {
             searchHistory.add(track)
             startAudioPlayerActivity(track)
         }
+
+        progressBar = findViewById(R.id.progressBar)
+
 
 
         clearHistory = findViewById(R.id.clearHistory)
@@ -161,6 +167,7 @@ class SearchActivity: AppCompatActivity() {
                 else {
                     recyclerView.adapter  = tracksAdapter
                     if (p0?.isEmpty() == false) {
+                        progressBar.visibility = View.VISIBLE
                         clientRequest = inputEditText.text.toString()
                         searchDebounce()
                     }
@@ -209,6 +216,7 @@ class SearchActivity: AppCompatActivity() {
         Log.d("SearchActivity", "INPUT USER VALUE TO SEARCH FUNC: $clientRequest")
         iTunesApi.findSong(request).enqueue(object : Callback<ITunesResponse> {
             override fun onResponse(call: Call<ITunesResponse>, response: Response<ITunesResponse>) {
+                progressBar.visibility = View.GONE
                 if (response.isSuccessful) {
                     Log.d("SearchActivity", "RESPONSE: $response")
                     Log.d("SearchActivity", "RESPONSE BODY: ${response.body()?.results!!}")
@@ -224,6 +232,7 @@ class SearchActivity: AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
+                progressBar.visibility = View.GONE
                 showErrorMessage(getString(R.string.something_went_wrong), 2)
             }
         })
