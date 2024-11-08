@@ -281,7 +281,7 @@ class SearchActivity: AppCompatActivity() {
         startActivity(audioplayerIntent)
     }
 
-    private fun clickDebounce(): Boolean { // отлиженное вополнение какого-либо действия
+    private fun clickDebounce(): Boolean { // отложенное вополнение какого-либо действия
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false

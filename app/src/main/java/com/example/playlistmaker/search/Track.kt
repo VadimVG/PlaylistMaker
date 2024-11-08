@@ -14,6 +14,7 @@ class Track: Serializable {
         var releaseDate: Date? = null // Год релиза трека
         var primaryGenreName: String = "" // Жанр трека
         var country: String = "" // Страна исполнителя
+        var previewUrl: String = "" // ссылка на трек
 
         constructor(
                 trackId: String,
@@ -24,7 +25,8 @@ class Track: Serializable {
                 collectionName: String?,
                 releaseDate: Date?,
                 primaryGenreName: String,
-                country: String
+                country: String,
+                previewUrl: String
         ){
                 this.trackId = trackId
                 this.trackName = trackName
@@ -35,6 +37,7 @@ class Track: Serializable {
                 this.releaseDate= releaseDate
                 this.primaryGenreName= primaryGenreName
                 this.country= country
+                this.previewUrl= previewUrl
         }
         constructor()
 }
