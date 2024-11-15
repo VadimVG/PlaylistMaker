@@ -94,7 +94,7 @@ class AudioPlayerActivity: AppCompatActivity() {
 
     override fun onRestart() { // продолжение проигрывания трека после восстановления приложения  из фон. режима
         super.onRestart()
-        audioPlayerController.startPlayer()
+        audioPlayerController.playbackControl()
     }
 
     override fun onDestroy() {
