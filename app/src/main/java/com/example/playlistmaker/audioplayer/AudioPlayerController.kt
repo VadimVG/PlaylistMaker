@@ -4,15 +4,14 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.playlistmaker.AudioPlayerActivity
 import com.example.playlistmaker.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AudioPlayerManipulation(private var mediaPlayer: MediaPlayer,
-                              private var play: ImageView,
-                              private var currentTime: TextView,
-                              private var handler: Handler,
+class AudioPlayerController(private var mediaPlayer: MediaPlayer,
+                            private var play: ImageView,
+                            private var currentTime: TextView,
+                            private var handler: Handler,
 ) {
 
     companion object {
@@ -38,7 +37,7 @@ class AudioPlayerManipulation(private var mediaPlayer: MediaPlayer,
             play.setImageResource(R.drawable.ic_play_audioplayer)
         }
     }
-    private fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
+    fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
         mediaPlayer.start()
         play.setImageResource(R.drawable.ic_pause_audioplayer)
         playerState = STATE_PLAYING

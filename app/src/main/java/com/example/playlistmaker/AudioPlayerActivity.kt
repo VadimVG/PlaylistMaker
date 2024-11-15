@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmaker.audioplayer.AudioPlayerManipulation
+import com.example.playlistmaker.audioplayer.AudioPlayerController
 import com.example.playlistmaker.search.AudioPlayerCurrentTrack
 import com.example.playlistmaker.search.Track
 import java.text.SimpleDateFormat
@@ -23,14 +23,13 @@ class AudioPlayerActivity: AppCompatActivity() {
     private lateinit var play: ImageView
     private var mediaPlayer = MediaPlayer()
     private lateinit var url: String
-    private lateinit var audioPlayerManipulation: AudioPlayerManipulation
+    private lateinit var audioPlayerController: AudioPlayerController
     private lateinit var currentTime: TextView
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audioplayer)
-
         findViewById<TextView>(R.id.audioplayerBack).setOnClickListener{ finish() } // возвращение на главный экран
 
         currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
@@ -39,10 +38,10 @@ class AudioPlayerActivity: AppCompatActivity() {
         play = findViewById<ImageView>(R.id.playTrack)
         currentTime = findViewById<TextView>(R.id.currentTime)
         url = currentTrack.previewUrl
-        audioPlayerManipulation = AudioPlayerManipulation(mediaPlayer, play, currentTime, handler)
-        audioPlayerManipulation.preparePlayer(url)
+        audioPlayerController = AudioPlayerController(mediaPlayer, play, currentTime, handler)
+        audioPlayerController.preparePlayer(url)
         play.setOnClickListener {
-            audioPlayerManipulation.playbackControl()
+            audioPlayerController.playbackControl()
         }
 
     }
@@ -90,7 +89,12 @@ class AudioPlayerActivity: AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        audioPlayerManipulation.pausePlayer()
+        audioPlayerController.pausePlayer()
+    }
+
+    override fun onRestart() { // продолжение проигрывания трека после восстановления приложения  из фон. режима
+        super.onRestart()
+        audioPlayerController.startPlayer()
     }
 
     override fun onDestroy() {
