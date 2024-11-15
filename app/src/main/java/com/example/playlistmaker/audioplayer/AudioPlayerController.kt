@@ -8,7 +8,7 @@ import com.example.playlistmaker.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AudioPlayerController(private var mediaPlayer: MediaPlayer,
+class AudioPlayerController(var mediaPlayer: MediaPlayer,
                             private var play: ImageView,
                             private var currentTime: TextView,
                             private var handler: Handler,
@@ -22,7 +22,7 @@ class AudioPlayerController(private var mediaPlayer: MediaPlayer,
 
         const val DELAY_MILLIS = 500L
     }
-    private var playerState = STATE_DEFAULT
+    var playerState = STATE_DEFAULT
     private var runnable = Runnable { setCurrentTrackTime() }
     fun preparePlayer(url: String) { // функция для подготовки медиаплеера к проигрыванию трека
         mediaPlayer.setDataSource(url)
@@ -37,7 +37,7 @@ class AudioPlayerController(private var mediaPlayer: MediaPlayer,
             play.setImageResource(R.drawable.ic_play_audioplayer)
         }
     }
-    fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
+    private fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
         mediaPlayer.start()
         play.setImageResource(R.drawable.ic_pause_audioplayer)
         playerState = STATE_PLAYING

@@ -34,7 +34,6 @@ class AudioPlayerActivity: AppCompatActivity() {
 
         currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
         createAlbumСover(currentTrack) // отрисовка экрана плеера с данными о треке
-
         play = findViewById<ImageView>(R.id.playTrack)
         currentTime = findViewById<TextView>(R.id.currentTime)
         url = currentTrack.previewUrl
@@ -89,12 +88,14 @@ class AudioPlayerActivity: AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        audioPlayerController.pausePlayer()
+        if (audioPlayerController.playerState == 2) {
+            audioPlayerController.pausePlayer()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
+        audioPlayerController.mediaPlayer.release()
     }
 
 }
