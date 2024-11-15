@@ -92,11 +92,6 @@ class AudioPlayerActivity: AppCompatActivity() {
         audioPlayerController.pausePlayer()
     }
 
-    override fun onRestart() { // продолжение проигрывания трека после восстановления приложения  из фон. режима
-        super.onRestart()
-        audioPlayerController.playbackControl()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer.release()
