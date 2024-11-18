@@ -45,7 +45,6 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var clearButton: ImageView
     private var searchText : String = SEARCH_TEXT
 
-    private var clientRequest:String? = null
     private lateinit var tracks: ArrayList<Track>
     private lateinit var tracksAdapter: TrackAdapter
     private val iTunesBaseUrl = "https://itunes.apple.com"
@@ -109,12 +108,9 @@ class SearchActivity: AppCompatActivity() {
 
         progressBar = findViewById(R.id.progressBar)
 
-
         clearHistory = findViewById(R.id.clearHistory)
 
-
         tvBack.setOnClickListener{ finish() } // возвращение на главный экран
-
 
         clearButton.setOnClickListener {
             inputEditText.setText(SEARCH_TEXT)
@@ -128,7 +124,7 @@ class SearchActivity: AppCompatActivity() {
         }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
-            if (hasFocus && inputEditText.text.isEmpty()) {
+            if (hasFocus && searchText.isEmpty()) {
                 searchHistoryTracks = searchHistory.get()
                 youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                 clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
@@ -147,25 +143,24 @@ class SearchActivity: AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // отображение истории поиска
-                Log.d("onTextChanged", "INPUT USER VALUE TO SEARCH FUNC: ${p0} ${p1} ${p2} ${p3}")
-                if (inputEditText.hasFocus() && p0?.isEmpty() == true ) {
+                searchText = p0.toString()
+                clearButton.visibility = clearButtonVisibility(searchText)
+                Log.d("onTextChanged before if", "INPUT USER VALUE TO SEARCH FUNC: ${searchText} ${p1} ${p2} ${p3}")
+                if (inputEditText.hasFocus() && searchText.isEmpty() ) {
+                    searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = 1)
                     youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
-                    clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                     recyclerView.adapter = searchHistoryTracksAdapter
+                    clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
                 }
                 else {
-//                    Log.d("onTextChanged", "INPUT USER VALUE TO SEARCH FUNC: ${inputEditText.text} ${p1} ${p2} ${p3}")
+                    Log.d("onTextChanged after if", "INPUT USER VALUE TO SEARCH FUNC: ${searchText} ${p1} ${p2} ${p3}")
                     youSearch.visibility = View.GONE
                     clearHistory.visibility = View.GONE
                     recyclerView.adapter  = tracksAdapter
-                    if (p0?.isEmpty() == false) {
-                        recyclerView.visibility = View.GONE
-                        progressBar.visibility = View.VISIBLE
-                        clientRequest = inputEditText.text.toString()
-                        searchDebounce()
-                    }
+                    recyclerView.visibility = View.GONE
+                    progressBar.visibility = View.VISIBLE
+                    searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = SEARCH_DEBOUNCE_DELAY_MILLIS)
                 }
-
                 errorText.visibility = View.GONE
                 errorNotFound.visibility = View.GONE
                 errorWentWrong.visibility = View.GONE
@@ -185,50 +180,41 @@ class SearchActivity: AppCompatActivity() {
         }
         refreshBt.setOnClickListener { search() } // отправка повторного запроса, если что-то пошло не так
 
-
-        val simpleTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                clearButton.visibility = clearButtonVisibility(s)
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                searchText = s.toString()
-            }
-        }
-        inputEditText.addTextChangedListener(simpleTextWatcher)
-
     }
 
 
     private fun search() {
-        Log.d("SearchActivity", "INPUT USER VALUE TO SEARCH FUNC: $clientRequest")
-        iTunesApi.findSong(clientRequest!!).enqueue(object : Callback<ITunesResponse> {
-            override fun onResponse(
-                call: Call<ITunesResponse>,
-                response: Response<ITunesResponse>
-            ) {
-                progressBar.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
-                if (response.isSuccessful) {
-                    Log.d("SearchActivity", "RESPONSE: $response")
-                    Log.d("SearchActivity", "RESPONSE BODY: ${response.body()?.results!!}")
-                    tracks.clear()
-                    if (response.body()?.results?.isNotEmpty() == true) {
-                        tracks.addAll(response.body()?.results!!)
-                        tracksAdapter.notifyDataSetChanged()
-                    }
-                    if (tracks.isEmpty()) showErrorMessage(getString(R.string.nothing_found), 1)
-                    else showErrorMessage("", 2)
-                } else showErrorMessage(getString(R.string.something_went_wrong), 2)
-            }
+        if (searchText.isNotEmpty()) {
+            Log.d("search", "INPUT USER VALUE TO SEARCH FUNC: $searchText")
+            iTunesApi.findSong(searchText).enqueue(object : Callback<ITunesResponse> {
+                override fun onResponse(
+                    call: Call<ITunesResponse>,
+                    response: Response<ITunesResponse>
+                ) {
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                    if (response.isSuccessful) {
+                        Log.d("search", "RESPONSE BODY: ${response.body()?.results!!}")
+                        tracks.clear()
+                        if (response.body()?.results?.isNotEmpty() == true) {
+                            tracks.addAll(response.body()?.results!!)
+                            tracksAdapter.notifyDataSetChanged()
+                        }
+                        if (tracks.isEmpty()) showErrorMessage(getString(R.string.nothing_found), 1)
+                        else showErrorMessage("", 2)
+                    } else showErrorMessage(getString(R.string.something_went_wrong), 2)
+                }
 
-            override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
-                progressBar.visibility = View.GONE
-                showErrorMessage(getString(R.string.something_went_wrong), 2)
-            }
-        })
+                override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
+                    progressBar.visibility = View.GONE
+                    showErrorMessage(getString(R.string.something_went_wrong), 2)
+                }
+            })
+        }
+        else {
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        }
     }
 
 
@@ -285,7 +271,7 @@ class SearchActivity: AppCompatActivity() {
         return current
     }
 
-    private fun searchDebounce() { //  отправка запроса через указанное время
+    private fun searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS: Long) { //  отправка запроса через указанное время
         handler.removeCallbacks(searchRunnable)
         handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
     }
