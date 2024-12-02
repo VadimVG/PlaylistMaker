@@ -1,15 +1,14 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.settings
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.switchTheme.APP_THEME_PREFERENCES
-import com.example.playlistmaker.switchTheme.App
-import com.example.playlistmaker.switchTheme.DARK_THEME
+import com.example.playlistmaker.R
+import com.example.playlistmaker.ThemeSwitcher.APP_THEME_PREFERENCES
+import com.example.playlistmaker.ThemeSwitcher.DARK_THEME
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 

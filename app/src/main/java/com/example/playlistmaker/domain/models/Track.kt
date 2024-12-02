@@ -1,4 +1,4 @@
-package com.example.playlistmaker.search;
+package com.example.playlistmaker.domain.models;
 
 import java.io.Serializable
 import java.util.Date

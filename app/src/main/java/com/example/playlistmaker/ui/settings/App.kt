@@ -1,10 +1,9 @@
-package com.example.playlistmaker.switchTheme
+package com.example.playlistmaker.ui.settings
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-
-const val APP_THEME_PREFERENCES = "app_theme_preferences"
-const val DARK_THEME = "dark_theme"
+import com.example.playlistmaker.ThemeSwitcher.APP_THEME_PREFERENCES
+import com.example.playlistmaker.ThemeSwitcher.DARK_THEME
 
 
 class App : Application() {
