@@ -22,16 +22,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.api.TrackInteractor
-import com.example.playlistmaker.AudioPlayerCurrentTrack
-import com.example.playlistmaker.SearchHistoryList
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
-import com.example.playlistmaker.InputSearchText
-import com.example.playlistmaker.DebounceSearchTime
+import com.example.playlistmaker.AudioPlayerCurrentTrack.CURRENT_TRACK
+import com.example.playlistmaker.DebounceSearchTime.CLICK_DEBOUNCE_DELAY_MILLIS
+import com.example.playlistmaker.DebounceSearchTime.SEARCH_DEBOUNCE_DELAY_MILLIS
+import com.example.playlistmaker.InputSearchText.SEARCH_KEY
+import com.example.playlistmaker.InputSearchText.SEARCH_TEXT
+import com.example.playlistmaker.SearchHistoryList.PREFERENCES_KEY
 import com.example.playlistmaker.domain.api.TrackHistoryInteractor
 
 class SearchActivity: AppCompatActivity() {
-    private var searchText : String = InputSearchText.SEARCH_TEXT
+    private var searchText : String = SEARCH_TEXT
 
     private lateinit var tracks: ArrayList<Track>
     private lateinit var tracksAdapter: TrackAdapter
@@ -70,7 +72,7 @@ class SearchActivity: AppCompatActivity() {
 
         Creator.initApplication(this.application)
         trackInteractor = Creator.provideTracksInteractor()
-        trackHistoryInteractor = Creator.provideTracksHistoryInteractor(sharedPreferences = getSharedPreferences(SearchHistoryList.PREFERENCES_KEY, MODE_PRIVATE))
+        trackHistoryInteractor = Creator.provideTracksHistoryInteractor(sharedPreferences = getSharedPreferences(PREFERENCES_KEY, MODE_PRIVATE))
         youSearch = findViewById<TextView>(R.id.youSearch)
         tracks = ArrayList<Track>()
         tracksAdapter = TrackAdapter(tracks)
@@ -95,7 +97,7 @@ class SearchActivity: AppCompatActivity() {
         tvBack.setOnClickListener{ finish() } // возвращение на главный экран
 
         clearButton.setOnClickListener {
-            inputEditText.setText(InputSearchText.SEARCH_TEXT)
+            inputEditText.setText(SEARCH_TEXT)
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager // скрываем клавиатуру
             inputMethodManager.hideSoftInputFromWindow(inputEditText.windowToken, 0) // скрываем клавиатуру
             inputEditText.clearFocus() // удаление фокуса с EditText
@@ -139,7 +141,7 @@ class SearchActivity: AppCompatActivity() {
                     recyclerView.adapter  = tracksAdapter
                     recyclerView.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
-                    searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = DebounceSearchTime.SEARCH_DEBOUNCE_DELAY_MILLIS)
+                    searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = SEARCH_DEBOUNCE_DELAY_MILLIS)
                 }
                 errorText.visibility = View.GONE
                 errorNotFound.visibility = View.GONE
@@ -220,18 +222,18 @@ class SearchActivity: AppCompatActivity() {
     private fun clearButtonVisibility(s: CharSequence?): Int = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE // настройка видимости кнопки для удаления текста из строки поиска
 
     override fun onSaveInstanceState(outState: Bundle) { // сохранение введенного текста из строки поиска (состояния) перед уничтожением активити
-        outState.putString(InputSearchText.SEARCH_KEY, searchText)
+        outState.putString(SEARCH_KEY, searchText)
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) { // восстановление введенного текста из строки поиска после создания активити
-        searchText = savedInstanceState.getString(InputSearchText.SEARCH_KEY).toString()
+        searchText = savedInstanceState.getString(SEARCH_KEY).toString()
         super.onRestoreInstanceState(savedInstanceState)
     }
 
     private fun startAudioPlayerActivity(track: Track) {
         val audioplayerIntent = Intent(this, AudioPlayerActivity::class.java)
-        audioplayerIntent.putExtra(AudioPlayerCurrentTrack.CURRENT_TRACK, track)
+        audioplayerIntent.putExtra(CURRENT_TRACK, track)
         startActivity(audioplayerIntent)
     }
 
@@ -239,7 +241,7 @@ class SearchActivity: AppCompatActivity() {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, DebounceSearchTime.CLICK_DEBOUNCE_DELAY_MILLIS)
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY_MILLIS)
         }
         return current
     }

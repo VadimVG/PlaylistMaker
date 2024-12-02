@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.ThemeSwitcher.APP_THEME_PREFERENCES
-import com.example.playlistmaker.ThemeSwitcher.DARK_THEME
 import com.example.playlistmaker.domain.api.ThemeTypeInteractor
 import com.example.playlistmaker.domain.models.ThemeType
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -38,7 +37,7 @@ class SettingsActivity: AppCompatActivity()  {
             themeTypeInteractor.switch(theme = ThemeType(checked))
             themeTypeInteractor.save(theme = ThemeType(checked))
         }
-        
+
         val tvShare: TextView = findViewById<TextView>(R.id.settingsShare)
         tvShare.setOnClickListener{
             val shareMessage = getString(R.string.share_message)
