@@ -2,15 +2,18 @@ package com.example.playlistmaker
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.example.playlistmaker.data.ThemeTypeRepositoryImpl
 import com.example.playlistmaker.data.TrackHistoryRepositoryImpl
 import com.example.playlistmaker.data.TrackRepositoryImpl
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
+import com.example.playlistmaker.domain.api.ThemeTypeInteractor
+import com.example.playlistmaker.domain.api.ThemeTypeRepository
 import com.example.playlistmaker.domain.api.TrackHistoryRepository
 import com.example.playlistmaker.domain.api.TrackInteractor
 import com.example.playlistmaker.domain.api.TrackRepository
 import com.example.playlistmaker.domain.impl.TrackInteractorImpl
-import com.example.playlistmaker.SearchHistoryList
 import com.example.playlistmaker.domain.api.TrackHistoryInteractor
+import com.example.playlistmaker.domain.impl.ThemeTypeInteractorImpl
 import com.example.playlistmaker.domain.impl.TrackHistoryInteractorImpl
 
 object Creator {
@@ -34,4 +37,13 @@ object Creator {
     fun provideTracksHistoryInteractor(sharedPreferences: SharedPreferences): TrackHistoryInteractor {
         return TrackHistoryInteractorImpl(getTrackHistoryRepository(sharedPreferences))
     }
+
+    private fun getThemeTypeRepository(sharedPreferences: SharedPreferences): ThemeTypeRepository {
+        return ThemeTypeRepositoryImpl(sharedPreferences = sharedPreferences)
+    }
+
+    fun provideThemeTypeInteractor(sharedPreferences: SharedPreferences): ThemeTypeInteractor {
+        return ThemeTypeInteractorImpl(getThemeTypeRepository(sharedPreferences))
+    }
+
 }
