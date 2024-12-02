@@ -1,9 +1,5 @@
 package com.example.playlistmaker
 
-object Consts {
-}
-
-
 object ITunesApiResponseStatuses {
     const val NETWORK_ERROR = -1
     const val SUCCESS_REQUEST = 200
@@ -22,6 +18,11 @@ object SearchHistoryList {
 
 object AudioPlayerCurrentTrack {
     var CURRENT_TRACK  = "CURRENT_TRACK"
+    const val STATE_DEFAULT = 0
+    const val STATE_PREPARED = 1
+    const val STATE_PLAYING = 2
+    const val STATE_PAUSED = 3
+    const val DELAY_MILLIS = 500L
 }
 
 object InputSearchText {
