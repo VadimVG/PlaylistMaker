@@ -65,7 +65,7 @@ class SearchActivity: AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val tvBack = findViewById<TextView>(R.id.settingsBack)
+        val settingsBack = findViewById<TextView>(R.id.settingsBack)
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
@@ -80,19 +80,16 @@ class SearchActivity: AppCompatActivity() {
         refreshBt = findViewById(R.id.refreshButton)
         recyclerView = findViewById<RecyclerView>(R.id.trackList)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
         tracksAdapter.onItemClickListener = { track -> // сохраняем трек, на который кликнул пользователь, в файл sharedPreferences
             if (clickDebounce()) {
                 trackHistoryInteractor.add(track)
                 startAudioPlayerActivity(track)
             }
         }
-
         progressBar = findViewById(R.id.progressBar)
-
         clearHistory = findViewById(R.id.clearHistory)
 
-        tvBack.setOnClickListener{ finish() } // возвращение на главный экран
+        settingsBack.setOnClickListener{ finish() } // возвращение на главный экран
 
         clearButton.setOnClickListener {
             inputEditText.setText(SEARCH_TEXT)
@@ -100,6 +97,7 @@ class SearchActivity: AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(inputEditText.windowToken, 0) // скрываем клавиатуру
             inputEditText.clearFocus() // удаление фокуса с EditText
             tracks.clear() // очистка списка треков
+            recyclerView.adapter = tracksAdapter
             tracksAdapter.notifyDataSetChanged() // указываем адаптеру, что полученные ранее данные (список треков) изменились и следует перерисовать список на экране
             youSearch.visibility = View.GONE
             clearHistory.visibility = View.GONE
@@ -107,17 +105,7 @@ class SearchActivity: AppCompatActivity() {
 
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
             if (hasFocus && searchText.isEmpty()) {
-                searchHistoryTracks = trackHistoryInteractor.get()
-                youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
-                clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
-                searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
-                recyclerView.adapter = searchHistoryTracksAdapter
-                searchHistoryTracksAdapter.onItemClickListener = {track ->
-                    startAudioPlayerActivity(track)
-                }
-            }
-            else {
-                recyclerView.adapter = tracksAdapter
+                refreshsearchHistoryTracks()
             }
         }
 
@@ -129,9 +117,7 @@ class SearchActivity: AppCompatActivity() {
                 clearButton.visibility = clearButtonVisibility(searchText)
                 if (inputEditText.hasFocus() && searchText.isEmpty() ) {
                     searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = 1)
-                    youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
-                    recyclerView.adapter = searchHistoryTracksAdapter
-                    clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+                    refreshsearchHistoryTracks()
                 }
                 else {
                     youSearch.visibility = View.GONE
@@ -139,7 +125,9 @@ class SearchActivity: AppCompatActivity() {
                     recyclerView.adapter  = tracksAdapter
                     recyclerView.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
+                    tracks.clear()
                     searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = SEARCH_DEBOUNCE_DELAY_MILLIS)
+                    tracksAdapter.notifyDataSetChanged()
                 }
                 errorText.visibility = View.GONE
                 errorNotFound.visibility = View.GONE
@@ -162,11 +150,23 @@ class SearchActivity: AppCompatActivity() {
             errorWentWrong.visibility = View.GONE
             refreshBt.visibility = View.GONE
             errorText.visibility = View.GONE
-            search()
+            progressBar.visibility = View.VISIBLE
+//            search()
+            searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = SEARCH_DEBOUNCE_DELAY_MILLIS)
         } // отправка повторного запроса, если что-то пошло не так
 
     }
 
+    private fun refreshsearchHistoryTracks() {
+        searchHistoryTracks = trackHistoryInteractor.get()
+        youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+        clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+        searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
+        recyclerView.adapter = searchHistoryTracksAdapter
+        searchHistoryTracksAdapter.onItemClickListener = {track ->
+            startAudioPlayerActivity(track)
+        }
+    }
 
     private fun search(){
         if (searchText.isNotEmpty()) {
@@ -181,7 +181,6 @@ class SearchActivity: AppCompatActivity() {
                             }
                             else if (foundTrack.isNotEmpty()) {
                                 tracks.addAll(foundTrack)
-                                tracksAdapter.notifyDataSetChanged()
                             }
                             else if (foundTrack.isEmpty()) showErrorMessage(getString(R.string.nothing_found), 1)
                         }
@@ -205,8 +204,8 @@ class SearchActivity: AppCompatActivity() {
             errorNotFound.visibility = View.GONE
             errorWentWrong.visibility = View.GONE
             refreshBt.visibility = View.GONE
-            tracks.clear()
-            tracksAdapter.notifyDataSetChanged()
+//            tracks.clear()
+//            tracksAdapter.notifyDataSetChanged()
             errorText.text = text
             if (type == 1) errorNotFound.visibility = View.VISIBLE
             else {

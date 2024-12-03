@@ -21,7 +21,7 @@ import com.example.playlistmaker.domain.impl.TrackHistoryInteractorImpl
 object Creator {
     private lateinit var application: Context
 
-    fun initApplication(application: Application) {
+    fun initApplication(application: Context) {
         this.application = application.applicationContext
     }
 
