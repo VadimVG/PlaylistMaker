@@ -29,7 +29,6 @@ import com.example.playlistmaker.DebounceSearchTime.CLICK_DEBOUNCE_DELAY_MILLIS
 import com.example.playlistmaker.DebounceSearchTime.SEARCH_DEBOUNCE_DELAY_MILLIS
 import com.example.playlistmaker.InputSearchText.SEARCH_KEY
 import com.example.playlistmaker.InputSearchText.SEARCH_TEXT
-import com.example.playlistmaker.SearchHistoryList.PREFERENCES_KEY
 import com.example.playlistmaker.domain.api.TrackHistoryInteractor
 
 class SearchActivity: AppCompatActivity() {
@@ -70,9 +69,8 @@ class SearchActivity: AppCompatActivity() {
         val inputEditText = findViewById<EditText>(R.id.inputEditText)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
-        Creator.initApplication(this.application)
         trackInteractor = Creator.provideTracksInteractor()
-        trackHistoryInteractor = Creator.provideTracksHistoryInteractor(sharedPreferences = getSharedPreferences(PREFERENCES_KEY, MODE_PRIVATE))
+        trackHistoryInteractor = Creator.provideTracksHistoryInteractor()
         youSearch = findViewById<TextView>(R.id.youSearch)
         tracks = ArrayList<Track>()
         tracksAdapter = TrackAdapter(tracks)
@@ -160,7 +158,12 @@ class SearchActivity: AppCompatActivity() {
             clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
         }
 
-        refreshBt.setOnClickListener { search() } // отправка повторного запроса, если что-то пошло не так
+        refreshBt.setOnClickListener {
+            errorWentWrong.visibility = View.GONE
+            refreshBt.visibility = View.GONE
+            errorText.visibility = View.GONE
+            search()
+        } // отправка повторного запроса, если что-то пошло не так
 
     }
 

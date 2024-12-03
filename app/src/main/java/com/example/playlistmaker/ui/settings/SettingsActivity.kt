@@ -1,14 +1,12 @@
 package com.example.playlistmaker.ui.settings
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
-import com.example.playlistmaker.ThemeSwitcher.APP_THEME_PREFERENCES
 import com.example.playlistmaker.domain.api.ThemeTypeInteractor
 import com.example.playlistmaker.domain.models.ThemeType
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -17,7 +15,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 class SettingsActivity: AppCompatActivity()  {
 
     private lateinit var themeSwitcher: SwitchMaterial
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var themeTypeInteractor: ThemeTypeInteractor
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +25,7 @@ class SettingsActivity: AppCompatActivity()  {
         tvBack.setOnClickListener{ finish() }
 
         themeSwitcher = findViewById(R.id.themeSwitcher)
-        sharedPreferences = getSharedPreferences(APP_THEME_PREFERENCES, MODE_PRIVATE)
-        Creator.initApplication(this.application)
-        themeTypeInteractor = Creator.provideThemeTypeInteractor(sharedPreferences)
+        themeTypeInteractor = Creator.provideThemeTypeInteractor()
         themeSwitcher.isChecked = themeTypeInteractor.get().type!!
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
