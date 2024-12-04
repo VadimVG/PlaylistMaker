@@ -2,19 +2,18 @@ package com.example.playlistmaker.domain.impl
 
 import com.example.playlistmaker.domain.api.ThemeTypeInteractor
 import com.example.playlistmaker.domain.api.ThemeTypeRepository
-import com.example.playlistmaker.domain.models.ThemeType
 
 class ThemeTypeInteractorImpl(private val repository: ThemeTypeRepository): ThemeTypeInteractor {
     override var darkTheme = false
-    override fun get(): ThemeType {
+    override fun get(): Boolean {
         return repository.get()
     }
 
-    override fun save(theme: ThemeType) {
+    override fun save(theme: Boolean) {
         repository.save(theme)
     }
 
-    override fun switch(theme: ThemeType) {
+    override fun switch(theme: Boolean) {
         repository.switch(theme)
     }
 }

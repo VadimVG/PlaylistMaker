@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.api.ThemeTypeInteractor
-import com.example.playlistmaker.domain.models.ThemeType
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 
@@ -26,11 +25,11 @@ class SettingsActivity: AppCompatActivity()  {
 
         themeSwitcher = findViewById(R.id.themeSwitcher)
         themeTypeInteractor = Creator.provideThemeTypeInteractor()
-        themeSwitcher.isChecked = themeTypeInteractor.get().type!!
+        themeSwitcher.isChecked = themeTypeInteractor.get()
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            themeTypeInteractor.switch(theme = ThemeType(checked))
-            themeTypeInteractor.save(theme = ThemeType(checked))
+            themeTypeInteractor.switch(theme = checked)
+            themeTypeInteractor.save(theme = checked)
         }
 
         val tvShare: TextView = findViewById<TextView>(R.id.settingsShare)
