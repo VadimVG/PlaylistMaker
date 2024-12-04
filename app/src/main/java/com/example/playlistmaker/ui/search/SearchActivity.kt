@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.Creator
@@ -99,8 +100,8 @@ class SearchActivity: AppCompatActivity() {
             tracks.clear() // очистка списка треков
             recyclerView.adapter = tracksAdapter
             tracksAdapter.notifyDataSetChanged() // указываем адаптеру, что полученные ранее данные (список треков) изменились и следует перерисовать список на экране
-            youSearch.visibility = View.GONE
-            clearHistory.visibility = View.GONE
+            youSearch.isVisible = false
+            clearHistory.isVisible = false
         }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus -> // отображение истории поиска
@@ -114,25 +115,25 @@ class SearchActivity: AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // отображение истории поиска
                 searchText = p0.toString()
-                clearButton.visibility = clearButtonVisibility(searchText)
+                clearButton.isVisible = searchText.isNotEmpty()
                 if (inputEditText.hasFocus() && searchText.isEmpty() ) {
                     searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = 1)
                     refreshsearchHistoryTracks()
                 }
                 else {
-                    youSearch.visibility = View.GONE
-                    clearHistory.visibility = View.GONE
+                    youSearch.isVisible = false
+                    clearHistory.isVisible = false
                     recyclerView.adapter  = tracksAdapter
-                    recyclerView.visibility = View.GONE
-                    progressBar.visibility = View.VISIBLE
+                    recyclerView.isVisible = false
+                    progressBar.isVisible = true
                     tracks.clear()
                     searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = SEARCH_DEBOUNCE_DELAY_MILLIS)
                     tracksAdapter.notifyDataSetChanged()
                 }
-                errorText.visibility = View.GONE
-                errorNotFound.visibility = View.GONE
-                errorWentWrong.visibility = View.GONE
-                refreshBt.visibility = View.GONE
+                errorText.isVisible = false
+                errorNotFound.isVisible = false
+                errorWentWrong.isVisible = false
+                refreshBt.isVisible = false
             }
 
             override fun afterTextChanged(p0: Editable?) {}
@@ -142,16 +143,15 @@ class SearchActivity: AppCompatActivity() {
             searchHistoryTracks.clear()
             trackHistoryInteractor.clear()
             searchHistoryTracksAdapter.notifyDataSetChanged()
-            youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
-            clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+            youSearch.isVisible = searchHistoryTracks.isNotEmpty()
+            clearHistory.isVisible = searchHistoryTracks.isNotEmpty()
         }
 
         refreshBt.setOnClickListener {
-            errorWentWrong.visibility = View.GONE
-            refreshBt.visibility = View.GONE
-            errorText.visibility = View.GONE
-            progressBar.visibility = View.VISIBLE
-//            search()
+            errorWentWrong.isVisible = false
+            refreshBt.isVisible = false
+            errorText.isVisible = false
+            progressBar.isVisible = true
             searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS = SEARCH_DEBOUNCE_DELAY_MILLIS)
         } // отправка повторного запроса, если что-то пошло не так
 
@@ -159,8 +159,8 @@ class SearchActivity: AppCompatActivity() {
 
     private fun refreshsearchHistoryTracks() {
         searchHistoryTracks = trackHistoryInteractor.get()
-        youSearch.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
-        clearHistory.visibility = if (searchHistoryTracks.size > 0) View.VISIBLE else View.GONE
+        youSearch.isVisible = searchHistoryTracks.isNotEmpty()
+        clearHistory.isVisible = searchHistoryTracks.isNotEmpty()
         searchHistoryTracksAdapter = TrackAdapter(searchHistoryTracks)
         recyclerView.adapter = searchHistoryTracksAdapter
         searchHistoryTracksAdapter.onItemClickListener = {track ->
@@ -174,8 +174,8 @@ class SearchActivity: AppCompatActivity() {
                 object : TrackInteractor.TrackConsumer {
                     override fun consume(foundTrack: ArrayList<Track>?) {
                         handler.post {
-                            progressBar.visibility = View.GONE
-                            recyclerView.visibility = View.VISIBLE
+                            progressBar.isVisible = false
+                            recyclerView.isVisible = true
                             if (foundTrack == null){
                                 showErrorMessage(getString(R.string.something_went_wrong), 2)
                             }
@@ -189,39 +189,34 @@ class SearchActivity: AppCompatActivity() {
             )
         }
         else {
-            progressBar.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
+            progressBar.isVisible = false
+            recyclerView.isVisible = true
         }
     }
 
 
     private fun showErrorMessage(text: String, type: Int) {
         if (text.isNotEmpty()) {
-            clearHistory.visibility = View.GONE
-            youSearch.visibility = View.GONE
-            recyclerView.visibility = View.GONE
-            errorText.visibility = View.VISIBLE
-            errorNotFound.visibility = View.GONE
-            errorWentWrong.visibility = View.GONE
-            refreshBt.visibility = View.GONE
-//            tracks.clear()
-//            tracksAdapter.notifyDataSetChanged()
+            clearHistory.isVisible = false
+            youSearch.isVisible = false
+            recyclerView.isVisible = false
+            errorText.isVisible = true
+            errorNotFound.isVisible = false
+            errorWentWrong.isVisible = false
+            refreshBt.isVisible = false
             errorText.text = text
-            if (type == 1) errorNotFound.visibility = View.VISIBLE
+            if (type == 1) errorNotFound.isVisible = true
             else {
-                errorWentWrong.visibility = View.VISIBLE
-                refreshBt.visibility = View.VISIBLE
+                errorWentWrong.isVisible = true
+                refreshBt.isVisible = true
             }
         } else {
-            errorText.visibility = View.GONE
-            errorNotFound.visibility = View.GONE
-            errorWentWrong.visibility = View.GONE
-            refreshBt.visibility = View.GONE
+            errorText.isVisible = false
+            errorNotFound.isVisible = false
+            errorWentWrong.isVisible = false
+            refreshBt.isVisible = false
         }
     }
-
-
-    private fun clearButtonVisibility(s: CharSequence?): Int = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE // настройка видимости кнопки для удаления текста из строки поиска
 
     override fun onSaveInstanceState(outState: Bundle) { // сохранение введенного текста из строки поиска (состояния) перед уничтожением активити
         outState.putString(SEARCH_KEY, searchText)
