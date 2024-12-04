@@ -3,6 +3,7 @@ package com.example.playlistmaker
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.data.ThemeTypeRepositoryImpl
 import com.example.playlistmaker.data.TrackHistoryRepositoryImpl
@@ -25,8 +26,11 @@ object Creator {
         this.application = application.applicationContext
     }
 
+    private fun getConnectivityManager(): ConnectivityManager {
+        return this.application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
     private fun getTracksRepository(): TrackRepository {
-        return TrackRepositoryImpl(RetrofitNetworkClient(application))
+        return TrackRepositoryImpl(RetrofitNetworkClient(getConnectivityManager()))
     }
     fun provideTracksInteractor(): TrackInteractor {
         return TrackInteractorImpl(getTracksRepository())

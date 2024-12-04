@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.example.playlistmaker.ITunesApiResponseStatuses
 import java.util.concurrent.Executors
 
-class RetrofitNetworkClient(private val context: Context): NetworkClient {
+class RetrofitNetworkClient(private val connectivityManager: ConnectivityManager): NetworkClient {
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://itunes.apple.com")// передача базовго url
         .addConverterFactory(GsonConverterFactory.create())
@@ -37,8 +37,6 @@ class RetrofitNetworkClient(private val context: Context): NetworkClient {
     }
 
     private fun isOnline(): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities =
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         if (capabilities != null) {
