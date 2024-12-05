@@ -1,22 +1,20 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.settings
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.switchTheme.APP_THEME_PREFERENCES
-import com.example.playlistmaker.switchTheme.App
-import com.example.playlistmaker.switchTheme.DARK_THEME
+import com.example.playlistmaker.Creator
+import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.api.ThemeTypeInteractor
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 
 class SettingsActivity: AppCompatActivity()  {
 
     private lateinit var themeSwitcher: SwitchMaterial
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var themeTypeInteractor: ThemeTypeInteractor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +23,14 @@ class SettingsActivity: AppCompatActivity()  {
         val tvBack: TextView = findViewById<TextView>(R.id.settingsBack)
         tvBack.setOnClickListener{ finish() }
 
-
         themeSwitcher = findViewById(R.id.themeSwitcher)
-        sharedPreferences = getSharedPreferences(APP_THEME_PREFERENCES, MODE_PRIVATE)
-        themeSwitcher.isChecked = (applicationContext as App).darkTheme
+        themeTypeInteractor = Creator.provideThemeTypeInteractor()
+        themeSwitcher.isChecked = themeTypeInteractor.get()
+
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as App).switchTheme(checked)
-            saveThemePreferences(checked)
+            themeTypeInteractor.switch(theme = checked)
+            themeTypeInteractor.save(theme = checked)
         }
-
-
 
         val tvShare: TextView = findViewById<TextView>(R.id.settingsShare)
         tvShare.setOnClickListener{
@@ -65,9 +61,5 @@ class SettingsActivity: AppCompatActivity()  {
             startActivity(docsIntent)
         }
     }
-    private fun saveThemePreferences(isDarkTheme: Boolean) {
-        sharedPreferences.edit()
-            .putBoolean(DARK_THEME, isDarkTheme)
-            .apply()
-    }
+
 }
