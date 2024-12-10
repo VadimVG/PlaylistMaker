@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.Creator
+import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.api.ThemeTypeInteractor
 import com.google.android.material.switchmaterial.SwitchMaterial
