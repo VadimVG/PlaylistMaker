@@ -1,9 +1,11 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.creator
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.SearchHistoryList
+import com.example.playlistmaker.ThemeSwitcher
 import com.example.playlistmaker.data.ThemeTypeRepositoryImpl
 import com.example.playlistmaker.data.TrackHistoryRepositoryImpl
 import com.example.playlistmaker.data.TrackRepositoryImpl
@@ -22,11 +24,11 @@ object Creator {
     private lateinit var application: Context
 
     fun initApplication(application: Context) {
-        this.application = application.applicationContext
+        Creator.application = application.applicationContext
     }
 
     private fun getConnectivityManager(): ConnectivityManager {
-        return this.application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
     private fun getTracksRepository(): TrackRepository {
         return TrackRepositoryImpl(RetrofitNetworkClient(getConnectivityManager()))
@@ -36,7 +38,7 @@ object Creator {
     }
 
     private fun getTrackHistorySharedPrefs(): SharedPreferences {
-        return this.application.getSharedPreferences(
+        return application.getSharedPreferences(
             SearchHistoryList.PREFERENCES_KEY,
             AppCompatActivity.MODE_PRIVATE
         )
@@ -49,7 +51,7 @@ object Creator {
     }
 
     private fun getThemeTypeSharedPrefs(): SharedPreferences {
-        return this.application.getSharedPreferences(
+        return application.getSharedPreferences(
             ThemeSwitcher.APP_THEME_PREFERENCES,
             AppCompatActivity.MODE_PRIVATE
         )
