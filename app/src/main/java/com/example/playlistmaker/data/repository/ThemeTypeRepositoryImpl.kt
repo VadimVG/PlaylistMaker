@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.data.repository
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate

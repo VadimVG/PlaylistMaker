@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.data.repository
 
 import com.example.playlistmaker.ITunesApiResponseStatuses
 import com.example.playlistmaker.data.dto.ITunesResponse

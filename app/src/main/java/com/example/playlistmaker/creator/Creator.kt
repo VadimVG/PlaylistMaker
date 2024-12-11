@@ -6,9 +6,9 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.SearchHistoryList
 import com.example.playlistmaker.ThemeSwitcher
-import com.example.playlistmaker.data.ThemeTypeRepositoryImpl
-import com.example.playlistmaker.data.TrackHistoryRepositoryImpl
-import com.example.playlistmaker.data.TrackRepositoryImpl
+import com.example.playlistmaker.data.repository.ThemeTypeRepositoryImpl
+import com.example.playlistmaker.data.repository.TrackHistoryRepositoryImpl
+import com.example.playlistmaker.data.repository.TrackRepositoryImpl
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.domain.api.ThemeTypeInteractor
 import com.example.playlistmaker.domain.api.ThemeTypeRepository
