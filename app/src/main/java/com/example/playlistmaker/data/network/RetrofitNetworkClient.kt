@@ -1,17 +1,12 @@
 package com.example.playlistmaker.data.network
 
-import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
-import com.example.playlistmaker.data.NetworkClient
 import com.example.playlistmaker.data.dto.Response
 import com.example.playlistmaker.data.dto.TrackSearchRequest
-import com.example.playlistmaker.data.dto.ITunesResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.playlistmaker.ITunesApiResponseStatuses
-import java.util.concurrent.Executors
 
 class RetrofitNetworkClient(private val connectivityManager: ConnectivityManager): NetworkClient {
     private val retrofit = Retrofit.Builder()
