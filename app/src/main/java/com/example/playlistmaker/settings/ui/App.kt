@@ -1,8 +1,8 @@
-package com.example.playlistmaker.ui.settings
+package com.example.playlistmaker.settings.ui
 
 import android.app.Application
 import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.domain.api.ThemeTypeInteractor
+import com.example.playlistmaker.settings.domain.api.ThemeTypeInteractor
 
 
 class App : Application() {

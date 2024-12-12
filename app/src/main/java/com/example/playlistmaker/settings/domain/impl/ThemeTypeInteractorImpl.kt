@@ -1,7 +1,7 @@
-package com.example.playlistmaker.domain.impl
+package com.example.playlistmaker.settings.domain.impl
 
-import com.example.playlistmaker.domain.api.ThemeTypeInteractor
-import com.example.playlistmaker.domain.api.ThemeTypeRepository
+import com.example.playlistmaker.settings.domain.api.ThemeTypeInteractor
+import com.example.playlistmaker.settings.domain.api.ThemeTypeRepository
 
 class ThemeTypeInteractorImpl(private val repository: ThemeTypeRepository): ThemeTypeInteractor {
     override var darkTheme = false

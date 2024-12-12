@@ -6,18 +6,18 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.SearchHistoryList
 import com.example.playlistmaker.ThemeSwitcher
-import com.example.playlistmaker.data.repository.ThemeTypeRepositoryImpl
+import com.example.playlistmaker.settings.data.repository.ThemeTypeRepositoryImpl
 import com.example.playlistmaker.data.repository.TrackHistoryRepositoryImpl
 import com.example.playlistmaker.data.repository.TrackRepositoryImpl
 import com.example.playlistmaker.data.network.RetrofitNetworkClient
-import com.example.playlistmaker.domain.api.ThemeTypeInteractor
-import com.example.playlistmaker.domain.api.ThemeTypeRepository
+import com.example.playlistmaker.settings.domain.api.ThemeTypeInteractor
+import com.example.playlistmaker.settings.domain.api.ThemeTypeRepository
 import com.example.playlistmaker.domain.api.TrackHistoryRepository
 import com.example.playlistmaker.domain.api.TrackInteractor
 import com.example.playlistmaker.domain.api.TrackRepository
 import com.example.playlistmaker.domain.impl.TrackInteractorImpl
 import com.example.playlistmaker.domain.api.TrackHistoryInteractor
-import com.example.playlistmaker.domain.impl.ThemeTypeInteractorImpl
+import com.example.playlistmaker.settings.domain.impl.ThemeTypeInteractorImpl
 import com.example.playlistmaker.domain.impl.TrackHistoryInteractorImpl
 
 object Creator {
