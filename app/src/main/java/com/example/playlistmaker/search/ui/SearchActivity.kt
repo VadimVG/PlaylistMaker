@@ -9,7 +9,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -29,15 +28,15 @@ import com.example.playlistmaker.DebounceSearchTime.CLICK_DEBOUNCE_DELAY_MILLIS
 import com.example.playlistmaker.DebounceSearchTime.SEARCH_DEBOUNCE_DELAY_MILLIS
 import com.example.playlistmaker.InputSearchText.SEARCH_KEY
 import com.example.playlistmaker.InputSearchText.SEARCH_TEXT
+import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.search.domain.api.TrackHistoryInteractor
 
 class SearchActivity: AppCompatActivity() {
+    private lateinit var binding: ActivitySearchBinding
     private var searchText : String = SEARCH_TEXT
-
     private lateinit var tracks: ArrayList<Track>
     private lateinit var tracksAdapter: TrackAdapter
     private lateinit var recyclerView: RecyclerView
-
     private lateinit var errorText: TextView
     private lateinit var errorNotFound: ImageView
     private lateinit var errorWentWrong: ImageView
@@ -46,16 +45,12 @@ class SearchActivity: AppCompatActivity() {
     private lateinit var youSearch: TextView
     private lateinit var searchHistoryTracks: ArrayList<Track>
     private lateinit var searchHistoryTracksAdapter: TrackAdapter
-
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
     private val searchRunnable = Runnable { search() }
-
     private lateinit var progressBar: ProgressBar
-
     private lateinit var trackInteractor: TrackInteractor
     private lateinit var trackHistoryInteractor: TrackHistoryInteractor
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,20 +60,22 @@ class SearchActivity: AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val settingsBack = findViewById<TextView>(R.id.settingsBack)
-        val inputEditText = findViewById<EditText>(R.id.inputEditText)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val inputEditText = binding.inputEditText
+        val clearButton = binding.clearIcon
 
         trackInteractor = Creator.provideTracksInteractor()
         trackHistoryInteractor = Creator.provideTracksHistoryInteractor()
-        youSearch = findViewById<TextView>(R.id.youSearch)
+        youSearch = binding.youSearch
         tracks = ArrayList<Track>()
         tracksAdapter = TrackAdapter(tracks)
-        errorText = findViewById(R.id.errorMessage)
-        errorNotFound = findViewById(R.id.nothing_found)
-        errorWentWrong = findViewById(R.id.something_went_wrong)
-        refreshBt = findViewById(R.id.refreshButton)
-        recyclerView = findViewById<RecyclerView>(R.id.trackList)
+        errorText = binding.errorMessage
+        errorNotFound = binding.nothingFound
+        errorWentWrong = binding.somethingWentWrong
+        refreshBt = binding.refreshButton
+        recyclerView = binding.trackList
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         tracksAdapter.onItemClickListener = { track -> // сохраняем трек, на который кликнул пользователь, в файл sharedPreferences
             if (clickDebounce()) {
@@ -86,10 +83,10 @@ class SearchActivity: AppCompatActivity() {
                 startAudioPlayerActivity(track)
             }
         }
-        progressBar = findViewById(R.id.progressBar)
-        clearHistory = findViewById(R.id.clearHistory)
+        progressBar = binding.progressBar
+        clearHistory = binding.clearHistory
 
-        settingsBack.setOnClickListener{ finish() } // возвращение на главный экран
+        binding.settingsBack.setOnClickListener{ finish() } // возвращение на главный экран
 
         clearButton.setOnClickListener {
             inputEditText.setText(SEARCH_TEXT)
