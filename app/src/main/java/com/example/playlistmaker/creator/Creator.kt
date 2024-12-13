@@ -19,6 +19,10 @@ import com.example.playlistmaker.domain.impl.TrackInteractorImpl
 import com.example.playlistmaker.domain.api.TrackHistoryInteractor
 import com.example.playlistmaker.settings.domain.impl.ThemeTypeInteractorImpl
 import com.example.playlistmaker.domain.impl.TrackHistoryInteractorImpl
+import com.example.playlistmaker.sharing.data.repository.SharingRepositoryImpl
+import com.example.playlistmaker.sharing.domain.api.SharingInteractor
+import com.example.playlistmaker.sharing.domain.api.SharingRepository
+import com.example.playlistmaker.sharing.domain.impl.SharingInteractorImpl
 
 object Creator {
     private lateinit var application: Context
@@ -61,6 +65,13 @@ object Creator {
     }
     fun provideThemeTypeInteractor(): ThemeTypeInteractor {
         return ThemeTypeInteractorImpl(getThemeTypeRepository(getThemeTypeSharedPrefs()))
+    }
+
+    private fun getSharingRepository(context: Context): SharingRepository {
+        return SharingRepositoryImpl(context = application)
+    }
+    fun provideSharingInteractor(): SharingInteractor {
+        return SharingInteractorImpl(getSharingRepository(application))
     }
 
 }
