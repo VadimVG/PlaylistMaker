@@ -13,66 +13,63 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.AudioPlayerCurrentTrack
+import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
 import com.example.playlistmaker.search.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayerActivity: AppCompatActivity() {
-
-    private lateinit var currentTrack: Track
-    private lateinit var play: ImageView
+    private lateinit var binding: ActivityAudioplayerBinding
     private var mediaPlayer = MediaPlayer()
-    private lateinit var url: String
     private lateinit var audioPlayerController: AudioPlayerController
-    private lateinit var currentTime: TextView
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audioplayer)
-        findViewById<TextView>(R.id.audioplayerBack).setOnClickListener{ finish() } // возвращение на главный экран
+        binding = ActivityAudioplayerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
+        binding.audioplayerBack.setOnClickListener{ finish() } // возвращение на главный экран
+
+        val currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
         createAlbumСover(currentTrack) // отрисовка экрана плеера с данными о треке
-        play = findViewById<ImageView>(R.id.playTrack)
-        currentTime = findViewById<TextView>(R.id.currentTime)
-        url = currentTrack.previewUrl
+
+        val play = binding.playTrack
+        val currentTime = binding.currentTime
         audioPlayerController = AudioPlayerController(mediaPlayer, play, currentTime, handler)
-        audioPlayerController.preparePlayer(url)
+        audioPlayerController.preparePlayer(currentTrack.previewUrl)
         play.setOnClickListener {
             audioPlayerController.playbackControl()
         }
 
     }
 
-
     private fun createAlbumСover(track: Track) { // функция для отрисовки инфомрации о выбранном пользователем треке
 
-        val trackLogo: ImageView = this.findViewById(R.id.trackLogo)
+        val trackLogo: ImageView = this.binding.trackLogo
 
-        val trackDurationValue: TextView = this.findViewById(R.id.trackDuration2)
+        val trackDurationValue: TextView = this.binding.trackDuration2
         trackDurationValue.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis.toInt())
 
-        val artistName: TextView = this.findViewById(R.id.trackArtist)
+        val artistName: TextView = this.binding.trackArtist
         artistName.text = track.artistName
 
-        val trackName: TextView = this.findViewById(R.id.trackName)
+        val trackName: TextView = this.binding.trackName
         trackName.text = track.trackName
 
-        val trackAlbum: TextView = this.findViewById(R.id.trackAlbum)
-        val trackAlbumValue: TextView = this.findViewById(R.id.trackAlbum2)
-        if(track.collectionName.isNullOrEmpty()) {
-            trackAlbum.visibility = View.GONE
-        }
+        val trackAlbum: TextView = this.binding.trackAlbum
+        val trackAlbumValue: TextView = this.binding.trackAlbum2
+        if(track.collectionName.isNullOrEmpty()) { trackAlbum.visibility = View.GONE }
         else trackAlbumValue.text = track.collectionName
 
-        val trackYearValue: TextView = this.findViewById(R.id.trackYear2)
+        val trackYearValue: TextView = this.binding.trackYear2
         trackYearValue.text = SimpleDateFormat("yyyy", Locale.getDefault()).format(track.releaseDate!!)
 
-        val trackGenreValue: TextView = this.findViewById(R.id.trackGenre2)
+        val trackGenreValue: TextView = this.binding.trackGenre2
         trackGenreValue.text = track.primaryGenreName
 
-        val trackCountryValue: TextView = this.findViewById(R.id.trackCountry2)
+        val trackCountryValue: TextView = this.binding.trackCountry2
         trackCountryValue.text = track.country
 
 
