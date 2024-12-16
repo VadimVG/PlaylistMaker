@@ -95,14 +95,14 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/nothing_found"
+            android:id="@+id/nothingFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/NothingFound"
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/something_went_wrong"
+            android:id="@+id/somethingWentWrong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SomethingWentWrong"
