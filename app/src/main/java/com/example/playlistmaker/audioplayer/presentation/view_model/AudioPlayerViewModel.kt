@@ -1,69 +1,76 @@
-package com.example.playlistmaker.audioplayer.ui
+package com.example.playlistmaker.audioplayer.presentation.view_model
 
 import android.media.MediaPlayer
 import android.os.Handler
-import android.widget.ImageView
-import android.widget.TextView
-import com.example.playlistmaker.R
+import android.os.Looper
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.playlistmaker.audioplayer.presentation.state.AudioPlayerState
 import java.text.SimpleDateFormat
 import java.util.Locale
-import com.example.playlistmaker.AudioPlayerCurrentTrack
 
-class AudioPlayerController(var mediaPlayer: MediaPlayer,
-                            private var play: ImageView,
-                            private var currentTime: TextView,
-                            private var handler: Handler,
-) {
-
-    var playerState = AudioPlayerCurrentTrack.STATE_DEFAULT
+class AudioPlayerViewModel: ViewModel() {
+    private var mediaPlayer = MediaPlayer()
+    private val handler = Handler(Looper.getMainLooper())
     private var runnable = Runnable { setCurrentTrackTime() }
+
+    private val _playerState = MutableLiveData<AudioPlayerState>()
+    val playerState: LiveData<AudioPlayerState> get() = _playerState
+
+    private val _currentPosition = MutableLiveData<String>()
+    val currentPosition: LiveData<String> get() = _currentPosition
+    init {
+        _playerState.value = AudioPlayerState.Default
+    }
+
     fun preparePlayer(url: String) { // функция для подготовки медиаплеера к проигрыванию трека
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
-            play.isEnabled = true
-            playerState = AudioPlayerCurrentTrack.STATE_PREPARED
+            _playerState.postValue(AudioPlayerState.Prepared)
         }
         mediaPlayer.setOnCompletionListener {
-            playerState = AudioPlayerCurrentTrack.STATE_PREPARED
-            currentTime.text = "00:00"
-            play.setImageResource(R.drawable.ic_play_audioplayer)
+            _playerState.postValue(AudioPlayerState.Prepared)
+            _currentPosition.value = "00:00"
         }
     }
+
     private fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
         mediaPlayer.start()
-        play.setImageResource(R.drawable.ic_pause_audioplayer)
-        playerState = AudioPlayerCurrentTrack.STATE_PLAYING
+        _playerState.value =  AudioPlayerState.Playing
     }
 
     fun pausePlayer() { // остановка вопроизведения трека и изменение кнопки "пауза" на кнопку "играть"
         mediaPlayer.pause()
-        play.setImageResource(R.drawable.ic_play_audioplayer)
-        playerState = AudioPlayerCurrentTrack.STATE_PAUSED
+        _playerState.value = AudioPlayerState.Paused
     }
+
     fun playbackControl() { // выбор режима действия
-        when(playerState) {
-            AudioPlayerCurrentTrack.STATE_PLAYING -> {
+        when(playerState.value) {
+            is AudioPlayerState.Playing -> {
                 pausePlayer()
                 stopTimer()
             }
-            AudioPlayerCurrentTrack.STATE_PREPARED, AudioPlayerCurrentTrack.STATE_PAUSED -> {
+            is AudioPlayerState.Prepared, AudioPlayerState.Paused -> {
                 startPlayer()
                 startTimer()
             }
+            AudioPlayerState.Default, null -> {}
         }
     }
+
     private fun setCurrentTrackTime() { // получение текущего времени продолжительности трека
         val res: String = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition)
-        currentTime.text = res
+        _currentPosition.value = res
     }
 
     private fun refreshCurrentTrackTime(): Runnable { // обновление времени трека на экране плеера
         return object : Runnable {
             override fun run() {
-                if (playerState == AudioPlayerCurrentTrack.STATE_PLAYING) {
+                if (playerState.value == AudioPlayerState.Playing) {
                     setCurrentTrackTime()
-                    handler.postDelayed(this, AudioPlayerCurrentTrack.DELAY_MILLIS)
+                    handler.postDelayed(this, DELAY_MILLIS)
                 }
             }
         }
@@ -76,6 +83,20 @@ class AudioPlayerController(var mediaPlayer: MediaPlayer,
 
     private fun stopTimer() { // остановка таймера
         runnable.let { handler.removeCallbacks(it) }
+    }
+
+    fun onPause() {
+        if (playerState.value == AudioPlayerState.Playing) {
+            pausePlayer()
+        }
+    }
+
+    fun onDestroy() {
+        mediaPlayer.release()
+    }
+
+    companion object {
+        const val DELAY_MILLIS = 500L
     }
 
 }
