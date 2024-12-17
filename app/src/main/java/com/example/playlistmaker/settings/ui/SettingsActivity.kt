@@ -1,9 +1,6 @@
 package com.example.playlistmaker.settings.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -41,11 +38,8 @@ class SettingsActivity: AppCompatActivity()  {
         binding.settingsDocs.setOnClickListener{ settingsViewModel.openTerms() }
 
         settingsViewModel.actionCommand.observe(this) {intent ->
-//            Log.d("settingsViewModel", "before")
             intent?.let { startActivity(intent) }
-//            Log.d("settingsViewModel", "after")
             settingsViewModel.clearActionCommand()
-//            Log.d("settingsViewModel", "clear")
         }
     }
     private fun applyTheme(isDarkTheme: Boolean) = setDefaultNightMode(if (isDarkTheme) MODE_NIGHT_YES else MODE_NIGHT_NO)
