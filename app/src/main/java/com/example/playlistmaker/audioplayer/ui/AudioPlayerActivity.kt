@@ -32,7 +32,7 @@ class AudioPlayerActivity: AppCompatActivity() {
 
         val play = binding.playTrack
         val currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
-        createAlbumСover(currentTrack) // отрисовка экрана плеера с данными о треке
+        createAlbumCover(currentTrack) // отрисовка экрана плеера с данными о треке
         audioPlayerViewModel.preparePlayer(currentTrack.previewUrl)
         audioPlayerViewModel.playerState.observe(this) { state ->
             when (state) {
@@ -60,7 +60,7 @@ class AudioPlayerActivity: AppCompatActivity() {
 
     }
 
-    private fun createAlbumСover(track: Track) { // функция для отрисовки инфомрации о выбранном пользователем треке
+    private fun createAlbumCover(track: Track) { // функция для отрисовки инфомрации о выбранном пользователем треке
         val trackLogo: ImageView = binding.trackLogo
         val trackDurationValue: TextView = binding.trackDuration2
         trackDurationValue.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis.toInt())

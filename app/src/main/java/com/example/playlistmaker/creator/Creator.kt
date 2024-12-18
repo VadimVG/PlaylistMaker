@@ -31,16 +31,31 @@ object Creator {
         Creator.application = application.applicationContext
     }
 
+    fun provideTracksInteractor(): TrackInteractor {
+        return TrackInteractorImpl(getTracksRepository())
+    }
+
+    fun provideTracksHistoryInteractor(): TrackHistoryInteractor {
+        return TrackHistoryInteractorImpl(getTrackHistoryRepository(getTrackHistorySharedPrefs()))
+    }
+
+    fun provideThemeTypeInteractor(): ThemeTypeInteractor {
+        return ThemeTypeInteractorImpl(getThemeTypeRepository(getThemeTypeSharedPrefs()))
+    }
+
+    fun provideSharingInteractor(): SharingInteractor {
+        return SharingInteractorImpl(getSharingRepository(application))
+    }
+
     private fun getConnectivityManager(): ConnectivityManager {
         return application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
     private fun getTracksRepository(): TrackRepository {
         return TrackRepositoryImpl(RetrofitNetworkClient(getConnectivityManager()))
     }
-    fun provideTracksInteractor(): TrackInteractor {
-        return TrackInteractorImpl(getTracksRepository())
+    private fun getSharingRepository(context: Context): SharingRepository {
+        return SharingRepositoryImpl(context = application)
     }
-
     private fun getTrackHistorySharedPrefs(): SharedPreferences {
         return application.getSharedPreferences(
             SearchHistoryList.PREFERENCES_KEY,
@@ -50,10 +65,6 @@ object Creator {
     private fun getTrackHistoryRepository(sharedPreferences: SharedPreferences): TrackHistoryRepository {
         return TrackHistoryRepositoryImpl(sharedPreferences = sharedPreferences)
     }
-    fun provideTracksHistoryInteractor(): TrackHistoryInteractor {
-        return TrackHistoryInteractorImpl(getTrackHistoryRepository(getTrackHistorySharedPrefs()))
-    }
-
     private fun getThemeTypeSharedPrefs(): SharedPreferences {
         return application.getSharedPreferences(
             ThemeSwitcher.APP_THEME_PREFERENCES,
@@ -62,16 +73,6 @@ object Creator {
     }
     private fun getThemeTypeRepository(sharedPreferences: SharedPreferences): ThemeTypeRepository {
         return ThemeTypeRepositoryImpl(sharedPreferences = sharedPreferences)
-    }
-    fun provideThemeTypeInteractor(): ThemeTypeInteractor {
-        return ThemeTypeInteractorImpl(getThemeTypeRepository(getThemeTypeSharedPrefs()))
-    }
-
-    private fun getSharingRepository(context: Context): SharingRepository {
-        return SharingRepositoryImpl(context = application)
-    }
-    fun provideSharingInteractor(): SharingInteractor {
-        return SharingInteractorImpl(getSharingRepository(application))
     }
 
 }

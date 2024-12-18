@@ -95,7 +95,7 @@ class AudioPlayerViewModel: ViewModel() {
         mediaPlayer.release()
     }
 
-    companion object {
+    private companion object {
         const val DELAY_MILLIS = 500L
     }
 
