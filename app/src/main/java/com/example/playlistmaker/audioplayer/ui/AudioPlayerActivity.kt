@@ -1,5 +1,6 @@
 package com.example.playlistmaker.audioplayer.ui
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +22,7 @@ import java.util.Locale
 class AudioPlayerActivity: AppCompatActivity() {
     private val audioPlayerViewModel by lazy { ViewModelProvider(this)[AudioPlayerViewModel::class.java]}
     private lateinit var binding: ActivityAudioplayerBinding
+    private val mediaPlayer = MediaPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,7 @@ class AudioPlayerActivity: AppCompatActivity() {
         val play = binding.playTrack
         val currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
         createAlbumCover(currentTrack) // отрисовка экрана плеера с данными о треке
+        audioPlayerViewModel.mediaPlayer = mediaPlayer
         audioPlayerViewModel.preparePlayer(currentTrack.previewUrl)
         audioPlayerViewModel.playerState.observe(this) { state ->
             when (state) {

@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayerViewModel: ViewModel() {
-    private var mediaPlayer = MediaPlayer()
+    lateinit var mediaPlayer: MediaPlayer
     private val handler = Handler(Looper.getMainLooper())
     private var runnable = Runnable { setCurrentTrackTime() }
 
@@ -35,17 +35,6 @@ class AudioPlayerViewModel: ViewModel() {
             _currentPosition.value = "00:00"
         }
     }
-
-    private fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
-        mediaPlayer.start()
-        _playerState.value =  AudioPlayerState.Playing
-    }
-
-    fun pausePlayer() { // остановка вопроизведения трека и изменение кнопки "пауза" на кнопку "играть"
-        mediaPlayer.pause()
-        _playerState.value = AudioPlayerState.Paused
-    }
-
     fun playbackControl() { // выбор режима действия
         when(playerState.value) {
             is AudioPlayerState.Playing -> {
@@ -59,12 +48,28 @@ class AudioPlayerViewModel: ViewModel() {
             AudioPlayerState.Default, null -> {}
         }
     }
+    fun onPause() {
+        if (playerState.value == AudioPlayerState.Playing) {
+            pausePlayer()
+        }
+    }
 
+    fun onDestroy() {
+        mediaPlayer.release()
+    }
+
+    private fun startPlayer() { // вопроизведение трека и изменение кнопки "играть" на кнопку "пауза"
+        mediaPlayer.start()
+        _playerState.value =  AudioPlayerState.Playing
+    }
+    private fun pausePlayer() { // остановка вопроизведения трека и изменение кнопки "пауза" на кнопку "играть"
+        mediaPlayer.pause()
+        _playerState.value = AudioPlayerState.Paused
+    }
     private fun setCurrentTrackTime() { // получение текущего времени продолжительности трека
         val res: String = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition)
         _currentPosition.value = res
     }
-
     private fun refreshCurrentTrackTime(): Runnable { // обновление времени трека на экране плеера
         return object : Runnable {
             override fun run() {
@@ -80,21 +85,9 @@ class AudioPlayerViewModel: ViewModel() {
         runnable = refreshCurrentTrackTime()
         handler.post(runnable)
     }
-
     private fun stopTimer() { // остановка таймера
         runnable.let { handler.removeCallbacks(it) }
     }
-
-    fun onPause() {
-        if (playerState.value == AudioPlayerState.Playing) {
-            pausePlayer()
-        }
-    }
-
-    fun onDestroy() {
-        mediaPlayer.release()
-    }
-
     private companion object {
         const val DELAY_MILLIS = 500L
     }
