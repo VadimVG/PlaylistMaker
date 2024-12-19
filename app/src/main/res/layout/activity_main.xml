@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    tools:context=".ui.main_menu.MainActivity"
+    tools:context=".main.ui.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
@@ -27,7 +27,7 @@
         android:paddingTop="@dimen/padding">
 
             <Button
-            android:id="@+id/btSearch"
+            android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/MainMenuButtonStyle"
@@ -36,7 +36,7 @@
 
 
         <Button
-            android:id="@+id/btMedia"
+            android:id="@+id/media"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/MainMenuButtonStyle"
@@ -44,7 +44,7 @@
             app:icon="@drawable/ic_main_menu_media" />
 
         <Button
-            android:id="@+id/btSettings"
+            android:id="@+id/settings"
             style="@style/MainMenuButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
