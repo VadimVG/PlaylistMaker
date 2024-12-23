@@ -4,6 +4,8 @@ import com.example.playlistmaker.search.data.repository.TrackHistoryRepositoryIm
 import com.example.playlistmaker.search.data.repository.TrackRepositoryImpl
 import com.example.playlistmaker.search.domain.api.TrackHistoryRepository
 import com.example.playlistmaker.search.domain.api.TrackRepository
+import com.example.playlistmaker.settings.data.repository.ThemeTypeRepositoryImpl
+import com.example.playlistmaker.settings.domain.api.ThemeTypeRepository
 import com.example.playlistmaker.sharing.data.repository.SharingRepositoryImpl
 import com.example.playlistmaker.sharing.domain.api.SharingRepository
 import org.koin.android.ext.koin.androidContext
@@ -21,6 +23,10 @@ val repositoryModule = module {
 
     single<SharingRepository> {
         SharingRepositoryImpl(androidContext())
+    }
+
+    factory <ThemeTypeRepository> {
+        ThemeTypeRepositoryImpl(get())
     }
 
 }

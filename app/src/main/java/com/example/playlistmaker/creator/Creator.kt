@@ -27,9 +27,9 @@ import com.example.playlistmaker.sharing.domain.impl.SharingInteractorImpl
 object Creator {
     private lateinit var application: Context
 
-    fun initApplication(application: Context) {
-        Creator.application = application.applicationContext
-    }
+//    fun initApplication(application: Context) {
+//        Creator.application = application.applicationContext
+//    }
 
 //    fun provideTracksInteractor(): TrackInteractor {
 //        return TrackInteractorImpl(getTracksRepository())
@@ -39,9 +39,9 @@ object Creator {
 //        return TrackHistoryInteractorImpl(getTrackHistoryRepository(getTrackHistorySharedPrefs()))
 //    }
 
-    fun provideThemeTypeInteractor(): ThemeTypeInteractor {
-        return ThemeTypeInteractorImpl(getThemeTypeRepository(getThemeTypeSharedPrefs()))
-    }
+//    fun provideThemeTypeInteractor(): ThemeTypeInteractor {
+//        return ThemeTypeInteractorImpl(getThemeTypeRepository(getThemeTypeSharedPrefs()))
+//    }
 
 //    fun provideSharingInteractor(): SharingInteractor {
 //        return SharingInteractorImpl(getSharingRepository(application))
@@ -65,14 +65,14 @@ object Creator {
 //    private fun getTrackHistoryRepository(sharedPreferences: SharedPreferences): TrackHistoryRepository {
 //        return TrackHistoryRepositoryImpl(sharedPreferences = sharedPreferences)
 //    }
-    private fun getThemeTypeSharedPrefs(): SharedPreferences {
-        return application.getSharedPreferences(
-            ThemeSwitcher.APP_THEME_PREFERENCES,
-            AppCompatActivity.MODE_PRIVATE
-        )
-    }
-    private fun getThemeTypeRepository(sharedPreferences: SharedPreferences): ThemeTypeRepository {
-        return ThemeTypeRepositoryImpl(sharedPreferences = sharedPreferences)
-    }
+//    private fun getThemeTypeSharedPrefs(): SharedPreferences {
+//        return application.getSharedPreferences(
+//            ThemeSwitcher.APP_THEME_PREFERENCES,
+//            AppCompatActivity.MODE_PRIVATE
+//        )
+//    }
+//    private fun getThemeTypeRepository(sharedPreferences: SharedPreferences): ThemeTypeRepository {
+//        return ThemeTypeRepositoryImpl(sharedPreferences = sharedPreferences)
+//    }
 
 }
