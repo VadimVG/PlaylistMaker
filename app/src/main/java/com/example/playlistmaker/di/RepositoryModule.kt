@@ -13,7 +13,7 @@ val repositoryModule = module {
     }
 
     single<TrackHistoryRepository> {
-        TrackHistoryRepositoryImpl(get())
+        TrackHistoryRepositoryImpl(get(), get())
     }
 
 }

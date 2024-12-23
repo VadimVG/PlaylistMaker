@@ -7,6 +7,7 @@ import com.example.playlistmaker.SearchHistoryList
 import com.example.playlistmaker.search.data.network.ITunesApi
 import com.example.playlistmaker.search.data.network.NetworkClient
 import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
+import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -30,6 +31,8 @@ val dataModule = module {
             .build()
             .create(ITunesApi::class.java)
     }
+
+    factory { Gson() }
 
 
     single {
