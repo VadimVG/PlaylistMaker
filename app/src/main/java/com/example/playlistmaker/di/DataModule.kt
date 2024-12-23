@@ -1,6 +1,7 @@
 package com.example.playlistmaker.di
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.SearchHistoryList
@@ -42,4 +43,7 @@ val dataModule = module {
             )
     }
 
+    factory {
+        MediaPlayer()
+    }
 }

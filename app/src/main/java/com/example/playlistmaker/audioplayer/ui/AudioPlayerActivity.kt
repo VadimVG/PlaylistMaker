@@ -16,13 +16,13 @@ import com.example.playlistmaker.audioplayer.presentation.state.AudioPlayerState
 import com.example.playlistmaker.audioplayer.presentation.view_model.AudioPlayerViewModel
 import com.example.playlistmaker.databinding.ActivityAudioplayerBinding
 import com.example.playlistmaker.search.domain.models.Track
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AudioPlayerActivity: AppCompatActivity() {
-    private val audioPlayerViewModel by lazy { ViewModelProvider(this)[AudioPlayerViewModel::class.java]}
+    private val audioPlayerViewModel by viewModel<AudioPlayerViewModel>()
     private lateinit var binding: ActivityAudioplayerBinding
-    private val mediaPlayer = MediaPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,6 @@ class AudioPlayerActivity: AppCompatActivity() {
         val play = binding.playTrack
         val currentTrack=intent.getSerializableExtra(AudioPlayerCurrentTrack.CURRENT_TRACK) as Track // получение данных о треке, на который кликнул пользователь в меню поиска
         createAlbumCover(currentTrack) // отрисовка экрана плеера с данными о треке
-        audioPlayerViewModel.mediaPlayer = mediaPlayer
         audioPlayerViewModel.preparePlayer(currentTrack.previewUrl)
         audioPlayerViewModel.playerState.observe(this) { state ->
             when (state) {
