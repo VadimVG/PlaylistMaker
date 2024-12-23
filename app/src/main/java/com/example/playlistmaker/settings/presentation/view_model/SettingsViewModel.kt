@@ -6,13 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.creator.Creator
-class SettingsViewModel: ViewModel() {
+import com.example.playlistmaker.sharing.domain.api.SharingInteractor
+
+class SettingsViewModel(
+    private val sharingInteractor: SharingInteractor
+): ViewModel() {
 
     private val themeTypeInteractor = Creator.provideThemeTypeInteractor()
     private val _isDarkThemeEnabled = MutableLiveData<Boolean>()
     val isDarkThemeEnabled: LiveData<Boolean> = _isDarkThemeEnabled
 
-    private val sharingInteractor = Creator.provideSharingInteractor()
     private val _actionCommand = MutableLiveData<Intent?>()
     val actionCommand: LiveData<Intent?> = _actionCommand
 

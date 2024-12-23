@@ -43,9 +43,9 @@ object Creator {
         return ThemeTypeInteractorImpl(getThemeTypeRepository(getThemeTypeSharedPrefs()))
     }
 
-    fun provideSharingInteractor(): SharingInteractor {
-        return SharingInteractorImpl(getSharingRepository(application))
-    }
+//    fun provideSharingInteractor(): SharingInteractor {
+//        return SharingInteractorImpl(getSharingRepository(application))
+//    }
 
 //    private fun getConnectivityManager(): ConnectivityManager {
 //        return application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -53,9 +53,9 @@ object Creator {
 //    private fun getTracksRepository(): TrackRepository {
 //        return TrackRepositoryImpl(RetrofitNetworkClient(getConnectivityManager()))
 //    }
-    private fun getSharingRepository(context: Context): SharingRepository {
-        return SharingRepositoryImpl(context = application)
-    }
+//    private fun getSharingRepository(context: Context): SharingRepository {
+//        return SharingRepositoryImpl(context = application)
+//    }
 //    private fun getTrackHistorySharedPrefs(): SharedPreferences {
 //        return application.getSharedPreferences(
 //            SearchHistoryList.PREFERENCES_KEY,
