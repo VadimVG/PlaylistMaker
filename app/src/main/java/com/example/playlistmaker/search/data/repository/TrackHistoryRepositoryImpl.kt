@@ -7,14 +7,17 @@ import com.example.playlistmaker.search.domain.models.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class TrackHistoryRepositoryImpl(private var sharedPreferences: SharedPreferences):
+class TrackHistoryRepositoryImpl(
+    private var sharedPreferences: SharedPreferences,
+    private val gson: Gson
+):
     TrackHistoryRepository {
 
     private val maxSize: Int = 10
     override fun get(): ArrayList<Track> {
         val json = sharedPreferences.getString(SearchHistoryList.ARRAY_LIST_KEY, null)
         val arrayListTutorialType = object : TypeToken<ArrayList<Track>>() {}.type
-        return if (json == null) ArrayList<Track>() else Gson().fromJson(json, arrayListTutorialType)
+        return if (json == null) ArrayList<Track>() else gson.fromJson(json, arrayListTutorialType)
     }
 
     override fun add(track: Track) {
@@ -32,7 +35,7 @@ class TrackHistoryRepositoryImpl(private var sharedPreferences: SharedPreference
     }
 
     override fun save(tracks: ArrayList<Track>) {
-        val json = Gson().toJson(tracks)
+        val json = gson.toJson(tracks)
         sharedPreferences.edit()
             .putString(SearchHistoryList.ARRAY_LIST_KEY, json)
             .apply()

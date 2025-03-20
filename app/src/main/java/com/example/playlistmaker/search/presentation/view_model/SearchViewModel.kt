@@ -9,9 +9,10 @@ import com.example.playlistmaker.search.domain.api.TrackInteractor
 import com.example.playlistmaker.search.domain.models.Track
 import com.example.playlistmaker.search.presentation.state.TrackSearchViewState
 
-class SearchViewModel: ViewModel() {
-    private val trackInteractor: TrackInteractor = Creator.provideTracksInteractor()
-    private val historyInteractor: TrackHistoryInteractor = Creator.provideTracksHistoryInteractor()
+class SearchViewModel(
+    private val trackInteractor: TrackInteractor,
+    private val historyInteractor: TrackHistoryInteractor
+): ViewModel() {
 
     private var _state = MutableLiveData<TrackSearchViewState>()
     val state: LiveData<TrackSearchViewState> get() = _state

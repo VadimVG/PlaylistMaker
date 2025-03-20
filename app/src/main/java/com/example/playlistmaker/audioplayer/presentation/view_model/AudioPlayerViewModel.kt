@@ -10,8 +10,9 @@ import com.example.playlistmaker.audioplayer.presentation.state.AudioPlayerState
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AudioPlayerViewModel: ViewModel() {
-    lateinit var mediaPlayer: MediaPlayer
+class AudioPlayerViewModel(
+    private var mediaPlayer: MediaPlayer
+): ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
     private var runnable = Runnable { setCurrentTrackTime() }
 

@@ -8,12 +8,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.playlistmaker.ITunesApiResponseStatuses
 
-class RetrofitNetworkClient(private val connectivityManager: ConnectivityManager): NetworkClient {
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://itunes.apple.com")// передача базовго url
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    private val iTunesApi = retrofit.create(ITunesApi::class.java)
+class RetrofitNetworkClient(
+    private val connectivityManager: ConnectivityManager,
+    private val iTunesApi: ITunesApi
+): NetworkClient {
     override fun doRequest(dto: Any): Response {
         if (isOnline() == false) {
             return Response().apply { resultCode = ITunesApiResponseStatuses.NETWORK_ERROR }

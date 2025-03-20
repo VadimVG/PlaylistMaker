@@ -32,9 +32,10 @@ import com.example.playlistmaker.InputSearchText.SEARCH_TEXT
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.search.presentation.state.TrackSearchViewState
 import com.example.playlistmaker.search.presentation.view_model.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity: AppCompatActivity() {
-    private val searchViewModel by lazy {ViewModelProvider(this)[SearchViewModel::class.java]}
+    private val searchViewModel by viewModel<SearchViewModel>()
     private lateinit var binding: ActivitySearchBinding
     private var searchText : String = SEARCH_TEXT
     private lateinit var tracks: ArrayList<Track>
