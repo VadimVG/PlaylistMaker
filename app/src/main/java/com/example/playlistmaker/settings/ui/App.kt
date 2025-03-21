@@ -18,8 +18,12 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(dataModule, repositoryModule, interactorModule, viewModelModule)
-
+            modules(
+                dataModule,
+                repositoryModule,
+                interactorModule,
+                viewModelModule
+            )
         }
         val themeTypeInteractor: ThemeTypeInteractor by inject()
         themeTypeInteractor.switch(themeTypeInteractor.get())

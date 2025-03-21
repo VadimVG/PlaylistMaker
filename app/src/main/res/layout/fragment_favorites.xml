@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/PlaylistAndFavoritesBackgroundStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/favoritesImage"
+        style="@style/PlaylistAndFavoritesImageStyle"
+        android:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/favoritesText"
+        style="@style/PlaylistAndFavoritesTextStyle"
+        android:visibility="visible"/>
+</FrameLayout>
