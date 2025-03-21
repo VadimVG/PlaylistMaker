@@ -1,24 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/media"
-    tools:context=".media.ui.MediaActivity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=".media.ui.MediaActivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/mediaBack"
+        style="@style/MediaMenuTextViewStyle">
+    </TextView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        style="@style/MediaMenuTabLayoutStyle"
+        app:tabTextAppearance="@style/MediaMenuTabLayoutStyle"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="fixed"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
-
-        <ImageButton
-            android:id="@+id/mediaBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setting_menu_back">
-        </ImageButton>
-    </LinearLayout>
-
+        android:layout_height="match_parent"/>
 </LinearLayout>
