@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings"
+    tools:context=".settings.ui.SettingsFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.PlaylistMaker.Base.Settings"
+    android:orientation="vertical">
+
+<TextView
+    android:id="@+id/settingsBack"
+    style="@style/SettingsMenuBackTextViewStyle" />
+
+<com.google.android.material.switchmaterial.SwitchMaterial
+    android:id="@+id/themeSwitcher"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/setting_menu_dark_mode"
+    style="@style/SettingsMenuTextViewStyle">
+</com.google.android.material.switchmaterial.SwitchMaterial>
+
+<TextView
+    android:id="@+id/settingsShare"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/SettingsMenuTextViewStyle"
+    android:text="@string/setting_menu_share"
+    app:drawableEndCompat="@drawable/ic_setting_menu_share" />
+
+<TextView
+    android:id="@+id/settingsSupport"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/SettingsMenuTextViewStyle"
+    android:text="@string/setting_menu_support"
+    app:drawableEndCompat="@drawable/ic_setting_menu_support" />
+
+<TextView
+    android:id="@+id/settingsDocs"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/SettingsMenuTextViewStyle"
+    android:text="@string/setting_menu_docs"
+    app:drawableEndCompat="@drawable/ic_setting_menu_docs" />
+
+</LinearLayout>

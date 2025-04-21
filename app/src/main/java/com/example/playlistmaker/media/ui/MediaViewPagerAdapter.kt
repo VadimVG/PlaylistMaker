@@ -8,7 +8,8 @@ import com.example.playlistmaker.media.presentation.view_model.FavoritesFragment
 import com.example.playlistmaker.media.presentation.view_model.PlaylistsFragment
 
 class MediaViewPagerAdapter(
-    fragmentManager: FragmentManager, lifecycle: Lifecycle
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
     private val fragments = listOf(
         FavoritesFragment.newInstance(),

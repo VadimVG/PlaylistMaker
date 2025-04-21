@@ -27,19 +27,17 @@
         <item name="android:background">@color/white</item>
     </style>
 
-
     <style name="SettingsMenuBackTextViewStyle">
         <item name="android:background">@color/white</item>
-        <item name="android:padding">4dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
         <item name="android:gravity">center|start</item>
         <item name="android:text">@string/main_menu_settings</item>
         <item name="android:backgroundTint">@color/white</item>
-        <item name="android:textColor">@color/dark</item>
         <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/dark</item>
         <item name="android:textSize">22sp</item>
-        <item name="drawableLeftCompat">@drawable/ic_setting_menu_back</item>
     </style>
 
 
@@ -53,7 +51,7 @@
         <item name="android:textColor">@color/dark</item>
         <item name="fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">22sp</item>
-        <item name="drawableLeftCompat">@drawable/ic_setting_menu_back</item>
+        <item name="android:padding">16dp</item>
     </style>
 
     <style name="EditTextStyle">
@@ -169,7 +167,7 @@
         <item name="android:textColor">@color/dark</item>
         <item name="fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">22sp</item>
-        <item name="drawableLeftCompat">@drawable/ic_setting_menu_back</item>
+        <item name="android:padding">16dp</item>
     </style>
 
     <style name="MediaMenuTabLayoutStyle">
