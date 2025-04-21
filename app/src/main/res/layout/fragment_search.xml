@@ -10,7 +10,6 @@ android:theme="@style/Theme.PlaylistMaker.Base.Settings"
 android:orientation="vertical">
 
 <TextView
-    android:id="@+id/settingsBack"
     style="@style/SearchMenuTextViewStyle">
 </TextView>
 
