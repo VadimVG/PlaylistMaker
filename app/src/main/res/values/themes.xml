@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <style name="Theme.PlaylistMaker.Base.MainMenu" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/dark</item>
+<!--        <item name="android:background">@color/white</item>-->
+<!--        <item name="android:textColor">@color/dark</item>-->
     </style>
 
     <style name="Theme.PlaylistMaker.Base.Settings" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -10,7 +10,5 @@
         <item name="android:textColor">@color/dark</item>
     </style>
 
-    <style name="Theme.PlaylistMaker.TabLayout" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-    </style>
 
 </resources>

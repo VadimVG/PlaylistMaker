@@ -152,6 +152,7 @@
     </style>
 
     <style name="MediaMenuTabLayoutStyle">
+        <item name="android:background">@color/dark</item>
         <item name="tabIndicatorColor">@color/white</item>
         <item name="tabTextColor">@color/white</item>
         <item name="tabRippleColor">@color/gray</item>
