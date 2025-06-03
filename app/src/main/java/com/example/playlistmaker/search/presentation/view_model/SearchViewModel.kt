@@ -1,9 +1,9 @@
 package com.example.playlistmaker.search.presentation.view_model
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.search.domain.api.TrackHistoryInteractor
 import com.example.playlistmaker.search.domain.api.TrackInteractor
 import com.example.playlistmaker.search.domain.models.Track
@@ -17,10 +17,12 @@ class SearchViewModel(
     private var _state = MutableLiveData<TrackSearchViewState>()
     val state: LiveData<TrackSearchViewState> get() = _state
 
+
     fun defaultStateValue() {
         _state.value = TrackSearchViewState.Loading
     }
     fun search(searchText: String) {
+        Log.d("test_handler", "search")
         if (searchText.isNotEmpty()) {
             trackInteractor.searchTracks(searchText,
                 object : TrackInteractor.TrackConsumer {

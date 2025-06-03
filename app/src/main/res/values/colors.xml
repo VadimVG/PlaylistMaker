@@ -12,4 +12,6 @@
     <color name="add_and_like_icons"> #1A1B22</color>
     <color name="back_icon"> #1A1B22 </color>
     <color name="search_progress_bar"> #3772E7 </color>
+    <color name="navigation_bar"> #1A1B22 </color>
+    <color name="bottom_navigation_background"> #FFFFFFFF </color>
 </resources>

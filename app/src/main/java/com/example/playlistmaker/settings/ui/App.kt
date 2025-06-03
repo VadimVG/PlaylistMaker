@@ -1,8 +1,6 @@
 package com.example.playlistmaker.settings.ui
 
 import android.app.Application
-import android.content.Context
-import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.di.dataModule
 import com.example.playlistmaker.di.interactorModule
 import com.example.playlistmaker.di.repositoryModule
