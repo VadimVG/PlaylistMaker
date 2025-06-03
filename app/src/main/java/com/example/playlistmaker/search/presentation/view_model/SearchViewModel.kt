@@ -1,13 +1,15 @@
 package com.example.playlistmaker.search.presentation.view_model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.search.domain.api.TrackHistoryInteractor
 import com.example.playlistmaker.search.domain.api.TrackInteractor
 import com.example.playlistmaker.search.domain.models.Track
 import com.example.playlistmaker.search.presentation.state.TrackSearchViewState
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val trackInteractor: TrackInteractor,
@@ -21,23 +23,27 @@ class SearchViewModel(
     fun defaultStateValue() {
         _state.value = TrackSearchViewState.Loading
     }
+
     fun search(searchText: String) {
-        if (searchText.isNotEmpty()) {
-            trackInteractor.searchTracks(searchText,
-                object : TrackInteractor.TrackConsumer {
-                    override fun consume(foundTrack: ArrayList<Track>?) {
-                        if (foundTrack == null) {
-                            _state.postValue(TrackSearchViewState.Error(1))
-                        } else if (foundTrack.isEmpty()) {
-                            _state.postValue(TrackSearchViewState.Error(2))
-                        } else if (foundTrack.isNotEmpty()) {
-                            _state.postValue(TrackSearchViewState.Content(foundTrack))
+        viewModelScope.launch {
+            _state.value = TrackSearchViewState.Loading
+
+            if (searchText.isNotEmpty()) {
+                trackInteractor.searchTracks(searchText)
+                    .catch { e ->
+                        _state.value = TrackSearchViewState.Error(1)
+                    }
+                    .collect { foundTrack ->
+                        _state.value = when {
+                            foundTrack == null -> TrackSearchViewState.Error(1)
+                            foundTrack.isEmpty() -> TrackSearchViewState.Error(2)
+                            else -> TrackSearchViewState.Content(foundTrack)
                         }
                     }
-                }
-            )
+            } else {
+                getTrackSearchHistory()
+            }
         }
-        else getTrackSearchHistory()
     }
 
     fun getTrackSearchHistory() {
