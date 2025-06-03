@@ -90,7 +90,7 @@ class AudioPlayerViewModel(
         runnable.let { handler.removeCallbacks(it) }
     }
     private companion object {
-        const val DELAY_MILLIS = 500L
+        const val DELAY_MILLIS = 300L
     }
 
 }
