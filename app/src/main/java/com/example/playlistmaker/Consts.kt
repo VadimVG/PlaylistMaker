@@ -4,6 +4,7 @@ object ITunesApiResponseStatuses {
     const val NETWORK_ERROR = -1
     const val SUCCESS_REQUEST = 200
     const val BAD_REQUEST = 400
+    const val SERVER_ERROR = 500
 }
 
 object ThemeSwitcher {
