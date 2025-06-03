@@ -22,7 +22,6 @@ class SearchViewModel(
         _state.value = TrackSearchViewState.Loading
     }
     fun search(searchText: String) {
-        Log.d("test_handler", "search")
         if (searchText.isNotEmpty()) {
             trackInteractor.searchTracks(searchText,
                 object : TrackInteractor.TrackConsumer {
