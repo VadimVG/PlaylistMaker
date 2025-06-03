@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.search.domain.models.Track
@@ -29,6 +30,10 @@ import com.example.playlistmaker.InputSearchText.SEARCH_TEXT
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.search.presentation.state.TrackSearchViewState
 import com.example.playlistmaker.search.presentation.view_model.SearchViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -49,10 +54,9 @@ class SearchFragment : Fragment() {
     private lateinit var searchHistoryTracks: ArrayList<Track>
     private lateinit var searchHistoryTracksAdapter: TrackAdapter
     private var isClickAllowed = true
-    private val handler = Handler(Looper.getMainLooper())
-    private val searchRunnable = Runnable { searchViewModel.search(searchText) }
     private lateinit var progressBar: ProgressBar
     private var shouldShowHistory = false
+    private var searchJob: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -108,6 +112,7 @@ class SearchFragment : Fragment() {
 
         tracksAdapter.onItemClickListener = { track ->
             if (clickDebounce()) {
+                Log.d("test_handler", "click")
                 searchViewModel.addTrackToHistory(track)
                 startAudioPlayerActivity(track)
             }
@@ -139,7 +144,7 @@ class SearchFragment : Fragment() {
                 searchText = p0.toString()
                 clearButton.isVisible = searchText.isNotEmpty()
                 if (inputEditText.hasFocus() && searchText.isEmpty()) {
-                    searchDebounce(1)
+                    searchDebounce(0)
                     refreshSearchHistoryTracks()
                 } else {
                     searchViewModel.defaultStateValue()
@@ -244,14 +249,22 @@ class SearchFragment : Fragment() {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY_MILLIS)
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(CLICK_DEBOUNCE_DELAY_MILLIS)
+                isClickAllowed = true
+            }
         }
         return current
     }
 
     private fun searchDebounce(SEARCH_DEBOUNCE_DELAY_MILLIS: Long) { //  отправка запроса через указанное время
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
+        searchJob?.cancel()
+        searchJob = viewLifecycleOwner.lifecycleScope.launch {
+            delay(SEARCH_DEBOUNCE_DELAY_MILLIS)
+            if (isActive) {
+                searchViewModel.search(searchText)
+            }
+        }
     }
 
 
@@ -269,6 +282,11 @@ class SearchFragment : Fragment() {
         super.onResume()
         binding.inputEditText.clearFocus()
         resetToDefaultAdapter()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchJob?.cancel()
     }
 
 }
