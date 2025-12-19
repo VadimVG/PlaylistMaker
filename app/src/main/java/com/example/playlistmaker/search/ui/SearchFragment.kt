@@ -89,30 +89,29 @@ class SearchFragment : Fragment() {
             when (state) {
                 is TrackSearchViewState.Loading -> {
                     showProgressBar()
-                    Log.d("my_test", "TrackSearchViewState.Loading")
+//                    Log.d("my_test", "TrackSearchViewState.Loading")
                 }
                 is TrackSearchViewState.Error -> {
                     if (state.status == 1) showErrorMessage(1)
                     else showErrorMessage(2)
-                    Log.d("my_test", "TrackSearchViewState.Error")
+//                    Log.d("my_test", "TrackSearchViewState.Error")
                 }
                 is TrackSearchViewState.Content -> {
                     tracks.addAll(state.tracks)
                     hideProgressBar()
-                    Log.d("my_test", "TrackSearchViewState.Content")
+//                    Log.d("my_test", "TrackSearchViewState.Content")
                 }
                 is TrackSearchViewState.History -> {
                     searchHistoryTracks = state.tracks
                     refreshSearchHistoryTracks()
                     hideProgressBar()
-                    Log.d("my_test", "TrackSearchViewState.History")
+//                    Log.d("my_test", "TrackSearchViewState.History")
                 }
             }
         }
 
         tracksAdapter.onItemClickListener = { track ->
             if (clickDebounce()) {
-                Log.d("test_handler", "click")
                 searchViewModel.addTrackToHistory(track)
                 startAudioPlayerActivity(track)
             }

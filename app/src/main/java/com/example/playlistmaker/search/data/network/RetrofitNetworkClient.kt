@@ -4,28 +4,28 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.playlistmaker.search.data.dto.Response
 import com.example.playlistmaker.search.data.dto.TrackSearchRequest
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import com.example.playlistmaker.ITunesApiResponseStatuses
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RetrofitNetworkClient(
     private val connectivityManager: ConnectivityManager,
     private val iTunesApi: ITunesApi
 ): NetworkClient {
-    override fun doRequest(dto: Any): Response {
-        if (isOnline() == false) {
+    override suspend fun doRequest(dto: Any): Response {
+        if (!isOnline()) {
             return Response().apply { resultCode = ITunesApiResponseStatuses.NETWORK_ERROR }
         }
-        if (dto is TrackSearchRequest) {
-            try {
-                val response = iTunesApi.findSong(text = dto.expression).execute()
-                val body = response.body() ?: Response()
-                return body.apply { resultCode = response.code() }
-            }
-            catch (e: Exception) { return Response().apply { resultCode = ITunesApiResponseStatuses.NETWORK_ERROR }}
-        }
-        else {
+        if(dto !is TrackSearchRequest) {
             return  Response().apply { resultCode = ITunesApiResponseStatuses.BAD_REQUEST }
+        }
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = iTunesApi.findSong(text = dto.expression)
+                response.apply { resultCode = ITunesApiResponseStatuses.SUCCESS_REQUEST }
+            } catch (e: Throwable) {
+                Response().apply { resultCode = ITunesApiResponseStatuses.SERVER_ERROR }
+            }
         }
     }
 
